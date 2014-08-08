@@ -1,6 +1,6 @@
 # Created by .gitignore support plugin (hsz.mobi)
 
 build/
-.idea/
+.idea/*
 .directory
 source/.directory
