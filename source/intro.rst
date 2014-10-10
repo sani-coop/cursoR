@@ -174,3 +174,108 @@ utilizada por los usuarios de los otros sistemas.
 Instalación de paquetes
 =======================
 
+Cuando se descarga R del Comprehensive Archive Network (CRAN), se obtiene el
+sistema *base* que ofrece la funcionalidad básica del lenguaje R.
+
+Se encuentra disponible una gran cantidad de paquetes que extienden la
+funcionalidad básica de R. Estos paquetes son desarrollados y publicados por la
+comunidad de usuarios de R.
+
+La principal ubicación para obtener paquetes de R es `CRAN`_. Se dispone de
+muchos paquetes para aplicaciones de bioinformática,del Proyecto
+`Bioconductor`_.
+
+Se puede obtener información de los paquetes disponibles en los repositorios
+configurados mediante la función `available_packages()`.
+
+En la actualidad se dispone de caso 6 mil paquetes en CRAN que cubren una gran
+diversidad de temas. Una buena orientación inicial se puede encontrar en el
+enlace `Task Views`_ (Vista por tareas) de la página principal de CRAN, que
+agrupa los paquetes de R por área de aplicación.
+
+Instalar paquetes de R
+----------------------
+
+Los paquetes se pueden instalar con la función de R `install.packages()`. Para
+instalar un paquete se pasa su nombre como primer argumento. El código a
+continuación instala el paquete **knitr** desde CRAN.
+
+.. code-block:: r
+
+   install.packages("knitr")
+
+Este comando descarga el paquete **knitr** desde CRAN y lo instala en su
+computadora. De igual manera, se descargan e instalan todas sus dependencias.
+
+Si se introduce como parámetro un vector tipo carácter se pueden instalar
+varios paquetes en simultáneo.
+
+.. code-block:: r
+
+   install.packages(c("knitr", "dplyr", "ggplot2"))
+
+Instalación desde RStudio
+-------------------------
+
+Desde la interfaz de RStudio se pueden instalar desde el menu
+`Tools>Install Packages...`, o bien desde la pestaña *Packages* del panel
+*Ayuda*.
+
+En ambos casos se despliega un diálogo de instalación de paquetes que permite
+indicar el nombre del paquete en una caja de texto. Si el paquete se encuentra
+en el repositorio después de escribir unas pocas letras del nombre debería
+autocompletarse.
+
+Instalación desde Bioconductor
+------------------------------
+
+Para instalar un paquete desde Bioconductor se deben instalar las funciones
+básicas de este repositorio mediante las instrucciones:
+
+.. code-block:: r
+
+   source("http://bioconductor.org/biocLite.R")
+   biocLite()
+
+El primer comando carga funciones de R desde el script `biocLite.R`, el segundo
+ejecuta una función contenida en este.
+
+A partir de este momento, Bioconductor queda configurado como repositorio y
+es posible instalar paquetes del mismo utilizando la función
+`install_packages()`.
+
+Cargar paquetes
+---------------
+
+Para que las funcionalidades de los paquetes estén disponibles en la sesión de
+R tienen que ser *cargados* en la memoria. Esto se realiza mediante la función
+`library()`. Por ejemplo, para cargar el paquete `reshape`:
+
+.. code-block:: r
+
+   library(reshape)
+
+Nótese que a diferencia de la instalación, en este caso no son necesarias las
+comillas para introducir el nombre del paquete.
+
+Este comando carga tanto el paquete indicado como todas sus dependencias.
+
+Al cargar un paquete, todos los objetos contenidos en el mismo quedan
+disponibles en el entorno, y su documentación es incluida en el sistema de
+ayuda.
+
+.. code-block:: rconsole
+
+   > library("rstudio", lib.loc="~/R/x86_64-pc-linux-gnu-library/3.1")
+   > search()
+    [1] ".GlobalEnv"        "package:rstudio"   "tools:rstudio"
+    [4] "package:stats"     "package:graphics"  "package:grDevices"
+    [7] "package:utils"     "package:datasets"  "package:methods"
+   [10] "Autoloads"         "package:base"
+
+Desde la interfaz de RStudio en la pestaña *Packages* del Panel Ayuda, se pueden
+cargar paquetes haciendo clic en la casilla de verificación que se encuentra a
+la izquierda del nombre correspondiente.
+
+.. _CRAN:: http://cran.r-project.org/
+.. _Bioconductor:: http://www.bioconductor.org/
