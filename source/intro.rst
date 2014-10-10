@@ -5,27 +5,30 @@ Introducción a R
 Conceptos básicos
 =================
 
-R es un dialecto del lenguaje S. Este último fue fue desarrollado en 1976 por John Chmbers y sus colegas en Bell Labs,
-como un entorno para análisis estadístico interno, y se implementó inicialmente como librerías de Fortran.
+R es un dialecto del lenguaje S. Este último fue desarrollado en 1976 por
+John Chambers y sus colegas en Bell Labs, como un entorno para análisis
+estadístico interno, y se implementó inicialmente como librerías de Fortran.
 
-Los fundamentos básicos de S no han cambiado desde 1998, año en el cual, como lenguaje, ganó el Premio de la Association
-for Coputing Machinerys Softwre System.
+Los fundamentos básicos de S no han cambiado desde 1998, año en el cual,
+como lenguaje, ganó el Premio de la Association for Computing Machinerys
+Software System.
 
-Para ese mismo año, y habiéndose hecho público R como lenguaje en 1993, se forma el Core Group R a fin de controlar el
-código fuente de R, integrado por varias personas asociadas con S-PLUS.
+Para ese mismo año, y habiéndose hecho público R como lenguaje en 1993,
+se forma el Core Group R a fin de controlar el código fuente de R,
+integrado por varias personas asociadas con S-PLUS.
 
 La versión más reciente de R es la 3.0.2 publicada en Diciembre del 2013.
 
 
 El lenguaje R tiene como características básicas:
 
-- R es un Lenguaje y Entorno de programación dinámico para análisis estadístico y generación de gráficos.
-
-- Puede ser ejecutado en casi cualquier plataforma estándar de sistema operativo (aún PlayStation 3!!)
-
-- Puede utilizarse en modo interactivo o script.
-
-- Es Software Libre, con una amplia comunidad de desarrolladores, investigadores y usuarios.
+* R es un Lenguaje y Entorno de programación dinámico para análisis estadístico
+  y generación de gráficos.
+* Puede ser ejecutado en casi cualquier plataforma estándar de sistema operativo
+  (aún PlayStation 3!!)
+* Puede utilizarse en modo interactivo o script.
+* Es Software Libre, con una amplia comunidad de desarrolladores, investigadores
+  y usuarios.
 
 
 Instalación de R y RStudio
