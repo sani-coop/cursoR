@@ -522,8 +522,217 @@ web.
 Estructuras de control
 ======================
 
+Las estructuras de control básicas de R son:
+
+* `if`, `else`: ejecuta un bloque de código si se satisface una condición.
+* `for`: ejecuta un bloque de código un número fijo de veces.
+* `while`: ejecuta un bloque de código mientras se cumpla una condición.
+* `repeat`: ejecuta un boque de código hasta encontrar un `break`.
+* `next`: salta a la siguiente iteración en un `for`, `while` o `repeat`.
+* `return`: devuelve el resultado de una función y sale.
+
+La mayoría de las estructuras de control no se utilizan en sesiones interactivas
+sino en programas de R.
+
+if
+---
+
+Un estructura `if` valida es como sigue:
+
+.. code-block:: r
+
+   if (x > 3) {
+       y <- 10
+   } else if (x < -3) {
+       y <- -10
+   } else {
+       y <- 0
+   }
+
+Esto es: si la condición `x > 3` se satisface se ejecuta el código a
+continuación encerrado entre llaves. La siguientes sentencias son opcionales,
+se pueden colocar tantos `else if(<condición>)` "de lo contrario si" como sean
+necesarios, y de ser necesario una sentencia `else` final.
+
+Debido a la naturaleza funcional de R, la siguiente expresión es equivalente:
+
+.. code-block:: r
+
+   y <- if (x > 3) {
+       10
+   } else if (x < -3) {
+       -10
+   } else {
+       0
+   }
+
+   # los bloques de una sola línea pueden prescindir de las llaves
+
+   y <- if (x > 3) 10 else if (x < -3) -10 else 0
+
+for
+---
+
+En los bucles `for` a una variable *iteradora* le asignan valores sucesivos de
+un vector o secuencia.
+
+Los siguientes bucles son equivalentes:
+
+.. code-block:: r
+
+   x <- c("a", "b", "c", "d")
+
+   for (i in 1:4) {
+       print(x[i])
+   }
+   for (i in seq_along(x)) {
+       print(x[i])
+   }
+   for (letter in x) {
+       print(letter)
+   }
+   for (i in 1:4) print(x[i])
+
+Es posible escribir bucles dentro de bucles, esto es, bucles anidados.
+
+
 Funciones
 =========
+
+Las funciones se utilizan para reorganizar el código, ya sea para contener
+secuencias de expresiones utilizadas de forma reiterada, o para separar el
+código en componentes mas comprensibles.
+
+Se crean utilizando la directiva `function()` y se almacenan como cualquier
+otro objeto. Son, de hecho, objetos de la clase *function*.
+
+Tienen la siguiente sintaxis básica:
+
+.. code-block:: r
+
+   function( arglist )
+       expr
+       return(value)
+
+* `arglist` es una lista de argumentos.
+* Si `expr` consta de más de una expresión debe estar encerrado entre llaves.
+* la sentencia `return` es opcional, por defecto las funciones en R devuelven el
+  valor de la última expresión.
+
+En R, en virtud de su naturaleza funcional, las funciones son *objetos de
+primera clase*, lo que implica que:
+
+* Pueden pasarse como argumentos de otras funciones.
+* Pueden anidarse, esto es, definir funciones dentro de funciones.
+* Devuelven el valor de la última expresión, a menos que hay una indicación
+  explícita con `return()`
+
+Argumentos
+----------
+
+Las funciones tienen argumentos con nombre a los que pueden asignarse valores
+por defecto.
+
+* Los argumentos que aparecen en la definición de la función se denominan
+  *argumentos formales*.
+* La función `formals` devuelve una lista con los argumentos formales de una
+  función.
+
+.. code-block:: rconsole
+
+   > f <- function(a, b) a + b
+   > formals(f)
+   $a
+
+   $b
+
+* Las llamadas a las funciones de R no tienen que utilizar todos los argumentos.
+  Algunos pueden ser quedar *faltantes* y otros tener valores por defecto.
+
+Coincidencia de argumentos
+--------------------------
+
+Los argumentos pueden coincidir por posición o por el nombre. Todas las llamadas
+a continuación de la función `sd` son equivalentes:
+
+.. code-block:: rconsole
+
+   > midata <- rnorm(100)
+   > sd(midata)
+   > sd(x = midata)
+   > sd(x = midata, na.rm = FALSE)
+   > sd(na.rm = FALSE, x = midata)
+   > sd(na.rm = FALSE, midata)
+
+Cuando un argumento coincide por nombre, se saca de la lista de argumentos.
+De manera que los restantes mantienen el mismo orden.
+
+Por ejemplo, en el caso de la función `lm()` que se utiliza para ajustar
+modelos lineales que tiene los siguientes argumentos:
+
+.. code-block:: rconsole
+
+   > args(lm)
+   function (formula, data, subset, weights, na.action, method = "qr",
+       model = TRUE, x = FALSE, y = FALSE, qr = TRUE, singular.ok = TRUE,
+       contrasts = NULL, offset, ...)
+
+Las dos llamadas siguientes son equivalentes:
+
+.. code-block:: r
+
+   lm(data = mydata, y ~ x, model = FALSE, 1:100)
+   lm(y ~ x, mydata, 1:100, model = FALSE)
+
+Los argumentos pueden tener una *coincidencia parcial*. Esto es, se pueden hacer
+coincidir los argumentos por nombre sin tener que escribir el argumento completo
+siempre que no haya ambigüedad.
+
+Los siguientes llamados son equivalentes:
+
+.. code-block:: r
+
+   seq.int(0, 1, len = 11)
+   seq.int(0, 1, length.out = 11)
+
+   ls(all = TRUE)
+   ls(all.names = TRUE)
+
+Los argumentos de las funciones de R también emplean *evaluación perezosa*, esto
+implica que solamente se consideran necesarias en la medida que se utilizan
+dentro de la función. Por ejemplo, el siguiente código corre sin problemas.
+
+.. code-block:: r
+
+   f <- function(a, b) {
+       a^2
+   }
+   f(2)
+
+En este caso, como b nunca es utilizado, no genera error. De hecho, se
+ejecutarían todas las sentencias hasta encontrar una referencia a `b`.
+
+Se puede utilizar `...` para indicar un número de argumentos variable, o el pase
+de argumentos de forma implícita. Generalmente se utilizan para extender
+funciones.
+
+.. code-block:: r
+
+   myplot <- function(x, y, type = "l", ...) {
+   plot(x, y, type = type, ...)
+   }
+
+Los argumentos formales que aparecen después de `...` deben ser explícitos y no
+admiten coincidencias parciales.
+
+.. code-block:: r
+
+   > args(paste)
+   function (..., sep = " ", collapse = NULL)
+   > paste("a", "b", sep = ":")
+   [1] "a:b"
+   > paste("a", "b", se = ":")
+   [1] "a b :"
 
 Reglas de alcance
 =================
