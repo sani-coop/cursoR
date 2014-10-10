@@ -119,7 +119,7 @@ En el *Entorno* se encuentra tanto la información de los objetos de R en la
 memoria con funcionalidad para importar datos, y existen pestañas para manejo
 del historial y del sistema de control de versiones.
 
-Finalmente en la sección *Ayuda*, aparte de acceso integrado a la ayuda de R
+Finalmente en el panel *Ayuda*, aparte de acceso integrado a la ayuda de R
 y los paquetes activos, se ofrece un explorador de archivos, el gestor de
 paquetes y el gestor de gráficos.
 
@@ -277,5 +277,6 @@ Desde la interfaz de RStudio en la pestaña *Packages* del Panel Ayuda, se puede
 cargar paquetes haciendo clic en la casilla de verificación que se encuentra a
 la izquierda del nombre correspondiente.
 
-.. _CRAN:: http://cran.r-project.org/
-.. _Bioconductor:: http://www.bioconductor.org/
+.. _CRAN: http://cran.r-project.org/
+.. _Bioconductor: http://www.bioconductor.org/
+.. _Task Views: http://cran.r-project.org/web/views/
