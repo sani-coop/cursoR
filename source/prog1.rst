@@ -334,6 +334,191 @@ forma simultánea con `dimnames()`.
 Lectura y escritura de datos
 ============================
 
+Funciones básicas
+-----------------
+
+Hay unas cuantas funciones básicas para introducir datos a R:
+
+* `read.table()`, `read.csv()`, para leer datos de forma tabular desde archivos
+  de texto.
+* `readLines()`, para leer información de archivos de texto como un vector de
+  clase carácter.
+* `source()`, para ejecutar código R. El contrario de `dump()`.
+* `dget()`, carga un objeto de R guardado como una representación en texto
+  almacenado con `dput()`.
+* `load()`, para cargar *espacios de trabajo* almacenados en formato `.RData`.
+* `unserialize()`, para leer objetos de R individuales guardados en formato
+  binario.
+
+Existen las siguientes funciones análogas para escribir datos:
+
+* `write.data()`
+* `writeLines()`
+* `dump()`
+* `dput()`
+* `save()`
+* `serialize()`
+
+Leer archivos con `read.table()`
+--------------------------------
+
+La función `read.table()` es una de las mas utilizadas, entre sus argumentos
+mas importantes tenemos:
+
+* `file`, nombre de un archivo o conexión.
+* `header`, valor lógico que indica si el archivo tiene una línea de cabecera.
+* `sep`, la cadena de caracteres usada como separador de columnas.
+* `colClasses`, un vector clase carácter que indica la clase de cada columna.
+* `nrows`, el número de filas de un conjunto de datos.
+* `comment.char`, la cadena de caracteres usada como indicador de comentarios.
+* `skip`, el número de líneas a saltar al principio.
+* `stringsAsFactors`, valor lógico que indica si las columnas de tipo carácter
+  serán codificadas como factores.
+
+Para conjuntos de datos pequeños y medianos, se pueden ejecutar `read.table()`
+sin ningún otro argumento.
+
+.. code-block:: r
+
+   data <- read.table("chiguire.txt")
+
+La función automáticamente:
+
+* Saltará todas las líneas que empiezan con `#`.
+* Determinará cuantas líneas son y cuanta memoria necesitará.
+* Determinará la clase mas conveniente para cada columna.
+* `read.csv()` es similar, pero asume que el separador es una coma.
+
+Para conjuntos de datos mas grandes, las siguientes recomendaciones pueden ser
+útiles:
+
+* Leer la página de ayuda de `help.table()`, que contiene muchas pistas.
+* Hacer un cálculo grueso de la memoria requerida, si excede la cantidad de
+  RAM disponible es hora de pensar en otro método.
+* Establecer `comment.char = ""` si no hay líneas comentadas en el archivo.
+* Especificar el argumento `colClasses`, hará la lectura mucho mas rápida.
+
+.. code-block:: r
+
+   initial <- read.table("datatable.txt", nrows = 100)
+   classes <- sapply(initial, class)
+   tabAll <- read.table("datatable.txt", colClasses = classes)
+
+En este caso se utilizan las clases que el propio R estima leyendo las primeras
+100 filas para leer el archivo completo.
+
+ * Establecer el argumento `nrows`, lo que permite controlar el uso de memoria.
+   Puede usarse para leer un archivo muy grande por partes.
+
+Todo pasa por conocer nuestro sistema, las especificaciones de hardware, la
+arquitectura del procesador, el sistema operativo utilizado, las aplicaciones
+en memoria y los usuarios con sesiones abiertas.
+
+Por ejemplo, un data.frame de millón y medio de filas y 120 columnas de datos
+numéricos (8 bytes por valor) requerirá aproximadamente de:
+
+.. code-block:: rconsole
+
+   > mem <- 1500000 * 120 * 8 # bytes
+   > mem <- mem / 2^20 # megabytes
+   > mem
+   [1] 1373.291
+   > mem <- mem / 1024 # gigabytes
+   > mem
+   [1] 1.341105
+
+Representaciones de texto
+-------------------------
+
+Utilizando `dput()` se pueden obtener representaciones de los datos en archivos
+de texto, que se pueden editar y recuperar.
+
+Estas representaciones preservan los metadatos, y funcionan mejor con sistemas
+de control de versiones y la "filosofía Unix" en general
+
+Tienen el problema que pueden requerir un gran espacio de almacenamiento.
+
+.. code-block:: rconsole
+
+   > y <- data.frame(a = c(1, 2), b = c("uno", "dos"))
+   > dput(y)
+   structure(list(a = c(1, 2), b = structure(c(2L, 1L),
+   .Label = c("dos", "uno"), class = "factor")),
+   .Names = c("a", "b"), row.names = c(NA, -2L), class = "data.frame")
+   > dput(y, file = "y.R")
+   > y.nuevo <- dget("y.R")
+   > y.nuevo
+     a   b
+   1 1 uno
+   2 2 dos
+
+Se utiliza `dump()` para almacenar representaciones de texto de objetos como
+asignaciones que pueden ser cargados en memoria por lotes con `source()`.
+
+.. code-block:: rconsole
+
+   > x <- pi
+   > y <- data.frame(a = c(1, 2), b = c("uno", "dos"))
+   > dump(c("x", "y"), file = "data.R")
+   > rm(x, y)
+   > source("data.R")
+   > x
+   [1] 3.141593
+   > y
+     a   b
+   1 1 uno
+   2 2 dos
+
+Interfaces con el mundo exterior
+--------------------------------
+
+Se pueden obtener datos utilizando *interfaces* de conexión. La conexiones
+pueden ser archivos u otras cosas mas exóticas:
+
+* `file()`, abre una conexión a un archivo.
+* `gzfile()`, abre una conexión a un archivo comprimido como `gzip`.
+* `bzfile()`, abre una conexión a un archivo comprimido como `bzip2`.
+* `url()`, abre una conexión a un recurso en Internet, usualmente un sitio web.
+
+Las funciones de conexión en general tienen los argumentos:
+
+* `description`, para `file()` y otras conexiones a archivo es la ruta y nombre
+  del archivo, para `url()` la dirección web.
+* `open`, es el tipo de la conexión, `"r"` para solo lectura, `"w"` para iniciar
+  un nuevo archivo y escribir, `"a"` para añadir, y `"rb"`, `"wb"` y `"ab"` los
+  equivalentes en modo binario (Windows).
+
+Las conexiones permiten leer archivos de forma secuencial. Por ejemplo, si
+tenemos el archivo de texto comprimido `"palabras.txt.gz"`. Se podría leer como
+sigue:
+
+.. code-block:: rconsole
+
+   > con <- gzfile("palabras.txt.gz")
+   > x <- readLines(con)
+   > x
+   [1] "hola" "chao" "ula"  "luna"
+
+La función `writeLines()` toma como argumento un vector de clase carácter y
+escribe cada elemento como una línea de una archivo de texto.
+
+Se puede igualmente utilizar una conexión para obtener el código de una página
+web.
+
+.. code-block:: rconsole
+
+   > con <- url("http://www.ine.gob.ve", "r")
+   > y <- readLines(con)
+   Mensajes de aviso perdidos
+   ...
+   > head(y)
+   [1] ""
+   [2] "<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.0 Transitional//EN\" \"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd\">"
+   [3] "<html xmlns=\"http://www.w3.org/1999/xhtml\">"
+   [4] "<head>"
+   [5] ""
+   [6] "<meta http-equiv=\"Content-Type\" content=\"text/html; charset=utf-8\" />"
+
 Estructuras de control
 ======================
 
