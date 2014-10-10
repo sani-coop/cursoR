@@ -6,7 +6,7 @@
 Taller de Computación Estadística basado en R
 =============================================
 
-Contenidos: esto es una lista de contenidos que estoy haciendo para mostrarle al sensei que pude hacerlo =)
+Contenidos:
 
 .. toctree::
    :maxdepth: 2
@@ -23,10 +23,9 @@ Contenidos: esto es una lista de contenidos que estoy haciendo para mostrarle al
    repro
 
 
-Indices and tables
-==================
+Índices y tablas
+================
 
 * :ref:`genindex`
-* :ref:`modindex`
 * :ref:`search`
 
