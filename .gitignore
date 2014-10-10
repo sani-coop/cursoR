@@ -2,6 +2,3 @@
 
 build/
 .idea/
-.idea/*
-.directory
-source/.directory
