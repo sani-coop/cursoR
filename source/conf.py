@@ -16,7 +16,7 @@ from __future__ import unicode_literals
 
 import sys
 import os
-import solar_theme
+on_rtd = os.environ.get('READTHEDOCS', None) == 'True'
 
 # If extensions (or modules to document with autodoc) are in another directory,
 # add these directories to sys.path here. If the directory is relative to the
@@ -111,8 +111,12 @@ pygments_style = 'colorful'
 
 # The theme to use for HTML and HTML Help pages.  See the documentation for
 # a list of builtin themes.
-
-html_theme = "solar_theme"
+if on_rtd:
+    html_theme = 'default'
+else:
+    import solar_theme
+    html_theme = "solar_theme"
+    html_theme_path = [solar_theme.theme_path]
 
 # Theme options are theme-specific and customize the look and feel of a theme
 # further.  For a list of options available for each theme, see the
@@ -120,7 +124,7 @@ html_theme = "solar_theme"
 # html_theme_options = {}
 
 # Add any paths that contain custom themes here, relative to this directory.
-html_theme_path = [solar_theme.theme_path]
+# html_theme_path = [solar_theme.theme_path]
 
 # The name for this set of Sphinx documents.  If None, it defaults to
 # "<project> v<release> documentation".
