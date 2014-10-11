@@ -215,12 +215,12 @@ latex_elements = {}
 # (source start file, target name, title,
 #  author, documentclass [howto, manual, or own class]).
 
-latex_documents = [('inicio', 'cursoR.tex', u'cursoR Documentation',
+latex_documents = [('inicio', 'cursoR.tex', u'Estadística Computacional en R',
                    u'Saní', 'manual')]
 
 # The name of an image file (relative to this directory) to place at the top of
 # the title page.
-# latex_logo = None
+latex_logo = "_static/sani_logo_notxt_100px.png"
 
 # For "manual" documents, if this is true, then toplevel headings are parts,
 # not chapters.
