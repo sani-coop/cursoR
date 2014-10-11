@@ -845,15 +845,76 @@ la función ``as.date()``.
     > y - x
     Time difference of 31 days
 
+Tener las variables en formato de fecha y tiempo facilita operaciones de
+sumar y sustraer fechas, y comparar fechas.
+
 El tiempo se representa usando las clases ``POSIXct`` o ``POSIXlt``. Y se
 almacenan internamente como el número de segundos desde ``1970-01-01``.
 
-* ``POSIXct`` es un entero grande, útil para almacenar valores temporales en un
-  data frame;
-* ``POSIXlt`` es una lista que almacena información adicional como el día de la
-  semana , el día del año, mes, y día del mes.
+``POSIXct`` es un entero grande, útil para almacenar valores temporales en un
+data frame;
+
+``POSIXlt`` es una lista que almacena información adicional como el día de la
+semana, el día del año, mes, y día del mes.
 
 Hay funciones genéricas que funcionan en fechas y tiempos:
+
 * ``weekdays()`` : devuelve el día de la semana.
 * ``months()`` : devuelve el nombre del mes.
 * ``quarters()`` : devuelve el número del trimestre ("Q1", "Q2", "Q3", or "Q4")
+
+Las funciones ``as.POSIXct()`` y ``as.POSIXlt()`` pueden utilizarse para
+coercer una cadena de carácter en un objeto temporal.
+
+.. code-block:: rconsole
+
+    > x <- Sys.time()
+    > x
+    [1] "2014-10-11 14:14:45 VET"
+    > p <- as.POSIXlt(x)
+    > names(unclass(p))
+     [1] "sec"    "min"    "hour"   "mday"   "mon"    "year"   "wday"   "yday"
+     [9] "isdst"  "zone"   "gmtoff"
+    > p$zone
+    [1] "VET"
+
+Se utiliza la función ``strptime()`` para convertir cadenas de carácter que se
+encuentran en distintos formatos en objetos de clase fecha o tiempo.
+
+.. code-block:: rconsole
+
+    > datestring <- c("Enero 10, 2012 10:40", "Diciembre 9, 2011 9:10")
+    > x <- strptime(datestring, "%B %d, %Y %H:%M")
+    > x
+    [1] "2012-01-10 10:40:00 VET" "2011-12-09 09:10:00 VET"
+
+Es importante notar que los nombres de los meses se indican en español porque
+R con la opción ``%B`` lee las nombres de mes de acuerdo a la configuración
+local del sistema.
+
+Los argumentos de ``strptime()`` indican de forma resumida el formato de los
+datos temporales, por ejemplo: ``"%Y %H:%M"`` indica el año en cuatro
+dígitos, un espacio, la hora como número decimal, dos puntos y los minutos
+como un número decimal.
+
+Utilizando la función ``Sys.setlocale()`` se posible establecer la
+configuración local de la sesión de R según sea necesario.
+
+.. code-block:: rconsole
+
+    > x <- c("1jan1960", "2jan1960", "31mar1960", "30jul1960")
+    > z <- strptime(x, "%d%b%Y")
+    > z
+    [1] NA               NA               "1960-03-31 VET" "1960-07-30 VET"
+    > lct <- Sys.getlocale("LC_TIME")
+    > Sys.setlocale("LC_TIME", "C")
+    [1] "C"
+    > x <- c("1jan1960", "2jan1960", "31mar1960", "30jul1960")
+    > z <- strptime(x, "%d%b%Y")
+    > z
+    [1] "1960-01-01 VET" "1960-01-02 VET" "1960-03-31 VET" "1960-07-30 VET"
+    > Sys.setlocale("LC_TIME", lct)
+    [1] "es_VE.UTF-8"
+
+
+
