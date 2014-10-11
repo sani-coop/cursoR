@@ -737,5 +737,38 @@ admiten coincidencias parciales.
 Reglas de alcance
 =================
 
+¿Cómo determina R que valor asignar a cada símbolo?
+
+Por ejemplo si se redefine una función existente como ``mean()``.
+
+.. code-block:: rconsole
+
+   > mean <- 2 * pi
+   > mean
+   [1] 6.283185
+   > mean(c(4,5,6))
+   [1] 5
+   > mean <- function(x) { x + 2 }
+   > mean(c(4,5,6))
+   [1] 6 7 8
+
+¿Cómo sabe R a cuál objeto llamar en cada caso?
+
+Para R asociar un símbolo a un objeto, busca dentro de una serie de *entornos*.
+Cuando se ejecuta el comando, R empieza buscando en el entorno global, y
+después dentro de los espacios de nombre de cada uno de los paquetes de la lista
+de búsqueda.
+
+Esta lista se determina utilizando la función ``search()``
+
+.. code-block:: rconsole
+
+   > search()
+    [1] ".GlobalEnv"        "tools:rstudio"     "package:stats"
+    [4] "package:graphics"  "package:grDevices" "package:utils"
+    [7] "package:datasets"  "package:methods"   "Autoloads"
+   [10] "package:base"
+
+
 Manejo de datos temporales
 ==========================
