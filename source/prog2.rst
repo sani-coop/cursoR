@@ -188,7 +188,47 @@ Una función anónima para extraer la primera columna de cada matriz
 
 Simulación
 ==========
-simulation
+
+
+Generación de números aleatorios
+--------------------------------
+
+Las funciones para distribuciones aleatorias en R son:
+
+- ``rnorm``: genera variables aleatorias de tipo Normal con una media y desviación estándar dadas.
+
+- ``dnorm``: evalúa la densidad de probabilidad de una Normal (con una media y desviación estándar dadas) en un punto (o
+vector de puntos)
+
+- ``pnorm``: evalúa la función de la distribución acumulada para una distribución Normal
+
+- ``rpois``: genera variables aleatorias Poisson con un índice dado.
+
+
+Las funciones de distribución de probabilidad, generalmente tienen cuatro funciones asociadas a ellas. Estas son:
+
+- ``d`` para densidad
+
+- ``r`` para generación de número aleatorio
+
+- ``p`` para distribución acumulada
+
+- ``q`` para función cuantil.
+
+
+El trabajo con distribuciones tipo Normal requiere el uso de estas cuatro funciones
+
+.. code-block:: r
+
+    dnorm(x, mean = 0, sd = 1, log = FALSE)
+    pnorm(q, mean = 0, sd = 1, lower.tail = TRUE, log.p = FALSE)
+    qnorm(p, mean = 0, sd = 1, lower.tail = TRUE, log.p = FALSE)
+    rnorm(n, mean = o, sd = 1)
+
+If :math:"\Phi" es la función de distribución acumulada de una distribución Normal estandar, entonces
+``pnorm(q)``=:math:"\Phi(q)" y ``qnorm(p)``= :math:"\Phi^{-1}(p)"
+
+
 
 
 Herramientas de depuración
