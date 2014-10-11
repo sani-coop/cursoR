@@ -103,8 +103,10 @@ E instalar finalmente
    $ sudo apt-get install r-base r-base-dev
 
 
-Dependiendo del caso, descargar
+Dependiendo del caso, descargar uno de los siguientes:
+
 http://download1.rstudio.org/rstudio-0.98.1062-i386.deb
+
 http://download1.rstudio.org/rstudio-0.98.1062-amd64.deb
 
 Según la arquitectura sea de 32 o 64 bits, e instalar utilizando
