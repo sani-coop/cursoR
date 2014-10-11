@@ -199,16 +199,16 @@ Se encuentra disponible una gran cantidad de paquetes que extienden la
 funcionalidad básica de R. Estos paquetes son desarrollados y publicados por la
 comunidad de usuarios de R.
 
-La principal ubicación para obtener paquetes de R es ``CRAN``_. Se dispone de
+La principal ubicación para obtener paquetes de R es `CRAN`_. Se dispone de
 muchos paquetes para aplicaciones de bioinformática,del Proyecto
-``Bioconductor``_.
+`Bioconductor`_.
 
 Se puede obtener información de los paquetes disponibles en los repositorios
 configurados mediante la función ``available_packages()``.
 
 En la actualidad se dispone de caso 6 mil paquetes en CRAN que cubren una gran
 diversidad de temas. Una buena orientación inicial se puede encontrar en el
-enlace ``Task Views``_ (Vista por tareas) de la página principal de CRAN, que
+enlace `Task Views`_ (Vista por tareas) de la página principal de CRAN, que
 agrupa los paquetes de R por área de aplicación.
 
 Instalar paquetes de R
