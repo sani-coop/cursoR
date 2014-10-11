@@ -19,26 +19,26 @@ R cuenta con 5 clases de objetos "atómicos":
 El tipo mas básico de objeto es un *vector*, el cual solamente puede contener
 objetos de la misma clase.
 
-Se pueden crear objetos vacíos con la función `vector()`.
+Se pueden crear objetos vacíos con la función ``vector()``.
 
 Valores numéricos
 -----------------
 
 En R los números se tratan por defecto como objetos numéricos (es decir, valores
 de punto flotante de doble precisión). Si se desea establecer un valor numérico
-como entero se le debe agregar el sufijo `L`.
+como entero se le debe agregar el sufijo ``L``.
 
-Por ejemplo: `1` denota a un objeto numérico; mediante `1L` el usuario establece
+Por ejemplo: ``1`` denota a un objeto numérico; mediante ``1L`` el usuario establece
 explícitamente un entero.
 
-El valor numérico especial `Inf` denota simbólicamente al infinito. Por ejemplo:
+El valor numérico especial ``Inf`` denota simbólicamente al infinito. Por ejemplo:
 
 .. code-block:: rconsole
 
    > 1 / 0
    [1] Inf
 
-El valor `NaN` (Not a number) representa un valor indefinido.
+El valor ``NaN`` (Not a number) representa un valor indefinido.
 
 .. code-block:: rconsole
 
@@ -57,12 +57,12 @@ Los objetos de R pueden tener atributos descriptivos, tales como:
 * otros metadatos/atributos definidos por el usuario o la usuaria.
 
 Se puede acceder a los atributos de un objeto mediante la función
-`attributes()`.
+``attributes()``.
 
 Asignación
 ----------
 
-En el terminal/consola de R se escriben expresiones. El símbolo `<-` es el
+En el terminal/consola de R se escriben expresiones. El símbolo ``<-`` es el
 operador de asignación.
 
 .. code-block:: rconsole
@@ -81,7 +81,7 @@ La sintaxis del lenguaje determina si una expresión es completa o no.
    > x <- # Expresión incompleta
    +
 
-El operador de asignación requiere del valor a asignar. El símbolo `#` indica
+El operador de asignación requiere del valor a asignar. El símbolo ``#`` indica
 un comentario, es decir todo lo que se encuentra a la derecha del símbolo es
 ignorado por R. Es el mecanismo empleado para añadir textos explicativos.
 
@@ -99,12 +99,12 @@ la consola interactiva, el contenido de los objetos de imprime directamente.
    > print(N)   # impresión explícita.
    [1] 6
 
-El `[1] 6` indica que es el primer elemento de `N`.
+El ``[1] 6`` indica que es el primer elemento de ``N``.
 
 Creación de vectores
 --------------------
 
-Se utiliza la función `c()` "combinar", para crear objetos de vectores.
+Se utiliza la función ``c()`` "combinar", para crear objetos de vectores.
 
 .. code-block:: rconsole
 
@@ -114,7 +114,7 @@ Se utiliza la función `c()` "combinar", para crear objetos de vectores.
    > x <- 5:10 # entero (secuencia)
    > x <- c(2+3i, 4-5i) # complejo
 
-Se puede utilizar la función `vector()` o una función de cuyo nombre sea clase
+Se puede utilizar la función ``vector()`` o una función de cuyo nombre sea clase
 del vector a crear:
 
 .. code-block:: rconsole
@@ -140,9 +140,9 @@ misma clase.
    > y
    [1] 1 5
 
-Funciones del tipo `as.numeric()` o `as.logical` se pueden utilizar para
+Funciones del tipo ``as.numeric()`` o ``as.logical`` se pueden utilizar para
 realizar una coerción explícita del vector. Cuando los valores no pueden ser
-coercionados al tipo indicado devuelve valores especiales del tipo `NA`
+coercionados al tipo indicado devuelve valores especiales del tipo ``NA``
 (No disponible, "Not Available").
 
 .. code-block:: rconsole
@@ -172,7 +172,7 @@ referencia al número de filas y columnas.
 
 Del ejemplo anterior, se puede observar que los valores se ordenan por
 defecto en la matriz por columnas. A menos que se establezca lo contrario
-mediante el argumento `byrow = TRUE`.
+mediante el argumento ``byrow = TRUE``.
 
 Se puede crear una matriz añadiendo un atributo de dimensión a un vector.
 
@@ -185,8 +185,8 @@ Se puede crear una matriz añadiendo un atributo de dimensión a un vector.
    [1,]    1    3    5    7    9
    [2,]    2    4    6    8   10
 
-También se pueden crear matrices uniendo vectores como filas (`rbind()`, row
-binding) o como columnas (`cbind()`, column binding).
+También se pueden crear matrices uniendo vectores como filas (``rbind()``, row
+binding) o como columnas (``cbind()``, column binding).
 
 .. code-block:: rconsole
 
@@ -242,29 +242,29 @@ Los distintos valores de un factor se conocen como "niveles" (levels).
    [1] e d c
    Levels: c d e f
 
-La función `levels()` puede utilizarse para especificar el orden de los niveles,
+La función ``levels()`` puede utilizarse para especificar el orden de los niveles,
 y los posibles valores que puede tener un factor.
 
 .. code-block:: rconsole
 
    > t[3] <- "o"
    Mensajes de aviso perdidos
-   In `[<-.factor`(`*tmp*`, 3, value = "o") :
+   In ``[<-.factor``(``*tmp*``, 3, value = "o") :
      invalid factor level, NA generated
 
 Valores Faltantes
 -----------------
 
-Son aquellos denotados por `NA` o `NaN` para los que se generan por operaciones
+Son aquellos denotados por ``NA`` o ``NaN`` para los que se generan por operaciones
 matemáticas indefinidas.
 
-Para verificar si los objetos son `NA` o `NaN` se pueden utilizar
-respectivamente las funciones `is.na()` o `is.nan()`.
+Para verificar si los objetos son ``NA`` o ``NaN`` se pueden utilizar
+respectivamente las funciones ``is.na()`` o ``is.nan()``.
 
-Los valores `NA` pertenecen a una clase, por esta razón se tienen valores
-`NA` enteros, `NA` lógicos, etc.
+Los valores ``NA`` pertenecen a una clase, por esta razón se tienen valores
+``NA`` enteros, ``NA`` lógicos, etc.
 
-Un valor `NaN` es `NA` pero no a la inversa.
+Un valor ``NaN`` es ``NA`` pero no a la inversa.
 
 .. code-block:: rconsole
 
@@ -288,7 +288,7 @@ La traducción literal sería "marcos de datos. Representan datos tabulares.
 * A diferencia de las matrices pueden tener distintas clases de objetos en
   cada columna.
 
-Los objetos de R tienen nombres `names()` que se asocian a cada elemento.
+Los objetos de R tienen nombres ``names()`` que se asocian a cada elemento.
 
 .. code-block:: rconsole
 
@@ -300,7 +300,7 @@ Los objetos de R tienen nombres `names()` que se asocian a cada elemento.
    a b c d e
    1 2 3 4 5
 
-Los data frames tienen el atributo especial `row.names()` que permite asociar
+Los data frames tienen el atributo especial ``row.names()`` que permite asociar
 nombres a las filas.
 
 .. code-block:: rconsole
@@ -314,8 +314,8 @@ nombres a las filas.
    tres     c     3
 
 Del mismo modo, se pueden asociar nombres a las filas y a las columnas de una
-matriz con las funciones `rownames()` y `colnames()` respectivamente. O de
-forma simultánea con `dimnames()`.
+matriz con las funciones ``rownames()`` y ``colnames()`` respectivamente. O de
+forma simultánea con ``dimnames()``.
 
 .. code-block:: rconsole
 
@@ -339,43 +339,43 @@ Funciones básicas
 
 Hay unas cuantas funciones básicas para introducir datos a R:
 
-* `read.table()`, `read.csv()`, para leer datos de forma tabular desde archivos
+* ``read.table()``, ``read.csv()``, para leer datos de forma tabular desde archivos
   de texto.
-* `readLines()`, para leer información de archivos de texto como un vector de
+* ``readLines()``, para leer información de archivos de texto como un vector de
   clase carácter.
-* `source()`, para ejecutar código R. El contrario de `dump()`.
-* `dget()`, carga un objeto de R guardado como una representación en texto
-  almacenado con `dput()`.
-* `load()`, para cargar *espacios de trabajo* almacenados en formato `.RData`.
-* `unserialize()`, para leer objetos de R individuales guardados en formato
+* ``source()``, para ejecutar código R. El contrario de ``dump()``.
+* ``dget()``, carga un objeto de R guardado como una representación en texto
+  almacenado con ``dput()``.
+* ``load()``, para cargar *espacios de trabajo* almacenados en formato ``.RData``.
+* ``unserialize()``, para leer objetos de R individuales guardados en formato
   binario.
 
 Existen las siguientes funciones análogas para escribir datos:
 
-* `write.data()`
-* `writeLines()`
-* `dump()`
-* `dput()`
-* `save()`
-* `serialize()`
+* ``write.data()``
+* ``writeLines()``
+* ``dump()``
+* ``dput()``
+* ``save()``
+* ``serialize()``
 
-Leer archivos con `read.table()`
+Leer archivos con ``read.table()``
 --------------------------------
 
-La función `read.table()` es una de las mas utilizadas, entre sus argumentos
+La función ``read.table()`` es una de las mas utilizadas, entre sus argumentos
 mas importantes tenemos:
 
-* `file`, nombre de un archivo o conexión.
-* `header`, valor lógico que indica si el archivo tiene una línea de cabecera.
-* `sep`, la cadena de caracteres usada como separador de columnas.
-* `colClasses`, un vector clase carácter que indica la clase de cada columna.
-* `nrows`, el número de filas de un conjunto de datos.
-* `comment.char`, la cadena de caracteres usada como indicador de comentarios.
-* `skip`, el número de líneas a saltar al principio.
-* `stringsAsFactors`, valor lógico que indica si las columnas de tipo carácter
+* ``file``, nombre de un archivo o conexión.
+* ``header``, valor lógico que indica si el archivo tiene una línea de cabecera.
+* ``sep``, la cadena de caracteres usada como separador de columnas.
+* ``colClasses``, un vector clase carácter que indica la clase de cada columna.
+* ``nrows``, el número de filas de un conjunto de datos.
+* ``comment.char``, la cadena de caracteres usada como indicador de comentarios.
+* ``skip``, el número de líneas a saltar al principio.
+* ``stringsAsFactors``, valor lógico que indica si las columnas de tipo carácter
   serán codificadas como factores.
 
-Para conjuntos de datos pequeños y medianos, se pueden ejecutar `read.table()`
+Para conjuntos de datos pequeños y medianos, se pueden ejecutar ``read.table()``
 sin ningún otro argumento.
 
 .. code-block:: r
@@ -384,19 +384,19 @@ sin ningún otro argumento.
 
 La función automáticamente:
 
-* Saltará todas las líneas que empiezan con `#`.
+* Saltará todas las líneas que empiezan con ``#``.
 * Determinará cuantas líneas son y cuanta memoria necesitará.
 * Determinará la clase mas conveniente para cada columna.
-* `read.csv()` es similar, pero asume que el separador es una coma.
+* ``read.csv()`` es similar, pero asume que el separador es una coma.
 
 Para conjuntos de datos mas grandes, las siguientes recomendaciones pueden ser
 útiles:
 
-* Leer la página de ayuda de `help.table()`, que contiene muchas pistas.
+* Leer la página de ayuda de ``help.table()``, que contiene muchas pistas.
 * Hacer un cálculo grueso de la memoria requerida, si excede la cantidad de
   RAM disponible es hora de pensar en otro método.
-* Establecer `comment.char = ""` si no hay líneas comentadas en el archivo.
-* Especificar el argumento `colClasses`, hará la lectura mucho mas rápida.
+* Establecer ``comment.char = ""`` si no hay líneas comentadas en el archivo.
+* Especificar el argumento ``colClasses``, hará la lectura mucho mas rápida.
 
 .. code-block:: r
 
@@ -407,7 +407,7 @@ Para conjuntos de datos mas grandes, las siguientes recomendaciones pueden ser
 En este caso se utilizan las clases que el propio R estima leyendo las primeras
 100 filas para leer el archivo completo.
 
- * Establecer el argumento `nrows`, lo que permite controlar el uso de memoria.
+ * Establecer el argumento ``nrows``, lo que permite controlar el uso de memoria.
    Puede usarse para leer un archivo muy grande por partes.
 
 Todo pasa por conocer nuestro sistema, las especificaciones de hardware, la
@@ -430,7 +430,7 @@ numéricos (8 bytes por valor) requerirá aproximadamente de:
 Representaciones de texto
 -------------------------
 
-Utilizando `dput()` se pueden obtener representaciones de los datos en archivos
+Utilizando ``dput()`` se pueden obtener representaciones de los datos en archivos
 de texto, que se pueden editar y recuperar.
 
 Estas representaciones preservan los metadatos, y funcionan mejor con sistemas
@@ -452,8 +452,8 @@ Tienen el problema que pueden requerir un gran espacio de almacenamiento.
    1 1 uno
    2 2 dos
 
-Se utiliza `dump()` para almacenar representaciones de texto de objetos como
-asignaciones que pueden ser cargados en memoria por lotes con `source()`.
+Se utiliza ``dump()`` para almacenar representaciones de texto de objetos como
+asignaciones que pueden ser cargados en memoria por lotes con ``source()``.
 
 .. code-block:: rconsole
 
@@ -475,21 +475,21 @@ Interfaces con el mundo exterior
 Se pueden obtener datos utilizando *interfaces* de conexión. La conexiones
 pueden ser archivos u otras cosas mas exóticas:
 
-* `file()`, abre una conexión a un archivo.
-* `gzfile()`, abre una conexión a un archivo comprimido como `gzip`.
-* `bzfile()`, abre una conexión a un archivo comprimido como `bzip2`.
-* `url()`, abre una conexión a un recurso en Internet, usualmente un sitio web.
+* ``file()``, abre una conexión a un archivo.
+* ``gzfile()``, abre una conexión a un archivo comprimido como ``gzip``.
+* ``bzfile()``, abre una conexión a un archivo comprimido como ``bzip2``.
+* ``url()``, abre una conexión a un recurso en Internet, usualmente un sitio web.
 
 Las funciones de conexión en general tienen los argumentos:
 
-* `description`, para `file()` y otras conexiones a archivo es la ruta y nombre
-  del archivo, para `url()` la dirección web.
-* `open`, es el tipo de la conexión, `"r"` para solo lectura, `"w"` para iniciar
-  un nuevo archivo y escribir, `"a"` para añadir, y `"rb"`, `"wb"` y `"ab"` los
+* ``description``, para ``file()`` y otras conexiones a archivo es la ruta y nombre
+  del archivo, para ``url()`` la dirección web.
+* ``open``, es el tipo de la conexión, ``"r"`` para solo lectura, ``"w"`` para iniciar
+  un nuevo archivo y escribir, ``"a"`` para añadir, y ``"rb"``, ``"wb"`` y ``"ab"`` los
   equivalentes en modo binario (Windows).
 
 Las conexiones permiten leer archivos de forma secuencial. Por ejemplo, si
-tenemos el archivo de texto comprimido `"palabras.txt.gz"`. Se podría leer como
+tenemos el archivo de texto comprimido ``"palabras.txt.gz"``. Se podría leer como
 sigue:
 
 .. code-block:: rconsole
@@ -499,7 +499,7 @@ sigue:
    > x
    [1] "hola" "chao" "ula"  "luna"
 
-La función `writeLines()` toma como argumento un vector de clase carácter y
+La función ``writeLines()`` toma como argumento un vector de clase carácter y
 escribe cada elemento como una línea de una archivo de texto.
 
 Se puede igualmente utilizar una conexión para obtener el código de una página
@@ -524,12 +524,12 @@ Estructuras de control
 
 Las estructuras de control básicas de R son:
 
-* `if`, `else`: ejecuta un bloque de código si se satisface una condición.
-* `for`: ejecuta un bloque de código un número fijo de veces.
-* `while`: ejecuta un bloque de código mientras se cumpla una condición.
-* `repeat`: ejecuta un boque de código hasta encontrar un `break`.
-* `next`: salta a la siguiente iteración en un `for`, `while` o `repeat`.
-* `return`: devuelve el resultado de una función y sale.
+* ``if``, ``else``: ejecuta un bloque de código si se satisface una condición.
+* ``for``: ejecuta un bloque de código un número fijo de veces.
+* ``while``: ejecuta un bloque de código mientras se cumpla una condición.
+* ``repeat``: ejecuta un boque de código hasta encontrar un ``break``.
+* ``next``: salta a la siguiente iteración en un ``for``, ``while`` o ``repeat``.
+* ``return``: devuelve el resultado de una función y sale.
 
 La mayoría de las estructuras de control no se utilizan en sesiones interactivas
 sino en programas de R.
@@ -537,7 +537,7 @@ sino en programas de R.
 if
 ---
 
-Un estructura `if` valida es como sigue:
+Un estructura ``if`` valida es como sigue:
 
 .. code-block:: r
 
@@ -549,10 +549,10 @@ Un estructura `if` valida es como sigue:
        y <- 0
    }
 
-Esto es: si la condición `x > 3` se satisface se ejecuta el código a
+Esto es: si la condición ``x > 3`` se satisface se ejecuta el código a
 continuación encerrado entre llaves. La siguientes sentencias son opcionales,
-se pueden colocar tantos `else if(<condición>)` "de lo contrario si" como sean
-necesarios, y de ser necesario una sentencia `else` final.
+se pueden colocar tantos ``else if(<condición>)`` "de lo contrario si" como sean
+necesarios, y de ser necesario una sentencia ``else`` final.
 
 Debido a la naturaleza funcional de R, la siguiente expresión es equivalente:
 
@@ -573,7 +573,7 @@ Debido a la naturaleza funcional de R, la siguiente expresión es equivalente:
 for
 ---
 
-En los bucles `for` a una variable *iteradora* le asignan valores sucesivos de
+En los bucles ``for`` a una variable *iteradora* le asignan valores sucesivos de
 un vector o secuencia.
 
 Los siguientes bucles son equivalentes:
@@ -603,7 +603,7 @@ Las funciones se utilizan para reorganizar el código, ya sea para contener
 secuencias de expresiones utilizadas de forma reiterada, o para separar el
 código en componentes mas comprensibles.
 
-Se crean utilizando la directiva `function()` y se almacenan como cualquier
+Se crean utilizando la directiva ``function()`` y se almacenan como cualquier
 otro objeto. Son, de hecho, objetos de la clase *function*.
 
 Tienen la siguiente sintaxis básica:
@@ -614,9 +614,9 @@ Tienen la siguiente sintaxis básica:
        expr
        return(value)
 
-* `arglist` es una lista de argumentos.
-* Si `expr` consta de más de una expresión debe estar encerrado entre llaves.
-* la sentencia `return` es opcional, por defecto las funciones en R devuelven el
+* ``arglist`` es una lista de argumentos.
+* Si ``expr`` consta de más de una expresión debe estar encerrado entre llaves.
+* la sentencia ``return`` es opcional, por defecto las funciones en R devuelven el
   valor de la última expresión.
 
 En R, en virtud de su naturaleza funcional, las funciones son *objetos de
@@ -625,7 +625,7 @@ primera clase*, lo que implica que:
 * Pueden pasarse como argumentos de otras funciones.
 * Pueden anidarse, esto es, definir funciones dentro de funciones.
 * Devuelven el valor de la última expresión, a menos que hay una indicación
-  explícita con `return()`
+  explícita con ``return()``
 
 Argumentos
 ----------
@@ -635,7 +635,7 @@ por defecto.
 
 * Los argumentos que aparecen en la definición de la función se denominan
   *argumentos formales*.
-* La función `formals` devuelve una lista con los argumentos formales de una
+* La función ``formals`` devuelve una lista con los argumentos formales de una
   función.
 
 .. code-block:: rconsole
@@ -653,7 +653,7 @@ Coincidencia de argumentos
 --------------------------
 
 Los argumentos pueden coincidir por posición o por el nombre. Todas las llamadas
-a continuación de la función `sd` son equivalentes:
+a continuación de la función ``sd`` son equivalentes:
 
 .. code-block:: rconsole
 
@@ -667,7 +667,7 @@ a continuación de la función `sd` son equivalentes:
 Cuando un argumento coincide por nombre, se saca de la lista de argumentos.
 De manera que los restantes mantienen el mismo orden.
 
-Por ejemplo, en el caso de la función `lm()` que se utiliza para ajustar
+Por ejemplo, en el caso de la función ``lm()`` que se utiliza para ajustar
 modelos lineales que tiene los siguientes argumentos:
 
 .. code-block:: rconsole
@@ -710,9 +710,9 @@ dentro de la función. Por ejemplo, el siguiente código corre sin problemas.
    f(2)
 
 En este caso, como b nunca es utilizado, no genera error. De hecho, se
-ejecutarían todas las sentencias hasta encontrar una referencia a `b`.
+ejecutarían todas las sentencias hasta encontrar una referencia a ``b``.
 
-Se puede utilizar `...` para indicar un número de argumentos variable, o el pase
+Se puede utilizar ``...`` para indicar un número de argumentos variable, o el pase
 de argumentos de forma implícita. Generalmente se utilizan para extender
 funciones.
 
@@ -722,7 +722,7 @@ funciones.
    plot(x, y, type = type, ...)
    }
 
-Los argumentos formales que aparecen después de `...` deben ser explícitos y no
+Los argumentos formales que aparecen después de ``...`` deben ser explícitos y no
 admiten coincidencias parciales.
 
 .. code-block:: r

@@ -61,7 +61,7 @@ Linux
 Debian estable
 ^^^^^^^^^^^^^^
 
-Añadir el repositorio (a `/etc/apt/sources.list`)
+Añadir el repositorio (a ``/etc/apt/sources.list``)
 
 deb http://cran.rstudio.com/bin/linux/debian wheezy-cran3/
 
@@ -82,7 +82,7 @@ Ubuntu o Mint
 ^^^^^^^^^^^^^
 
 Para instalar la versión mas actualizada de R añadir el repositorio:
-(a `/etc/apt/sources.list` o mediante "Orígenes de software")
+(a ``/etc/apt/sources.list`` o mediante "Orígenes de software")
 
 deb http://cran.rstudio.com/bin/linux/ubuntu trusty/
 
@@ -199,22 +199,22 @@ Se encuentra disponible una gran cantidad de paquetes que extienden la
 funcionalidad básica de R. Estos paquetes son desarrollados y publicados por la
 comunidad de usuarios de R.
 
-La principal ubicación para obtener paquetes de R es `CRAN`_. Se dispone de
+La principal ubicación para obtener paquetes de R es ``CRAN``_. Se dispone de
 muchos paquetes para aplicaciones de bioinformática,del Proyecto
-`Bioconductor`_.
+``Bioconductor``_.
 
 Se puede obtener información de los paquetes disponibles en los repositorios
-configurados mediante la función `available_packages()`.
+configurados mediante la función ``available_packages()``.
 
 En la actualidad se dispone de caso 6 mil paquetes en CRAN que cubren una gran
 diversidad de temas. Una buena orientación inicial se puede encontrar en el
-enlace `Task Views`_ (Vista por tareas) de la página principal de CRAN, que
+enlace ``Task Views``_ (Vista por tareas) de la página principal de CRAN, que
 agrupa los paquetes de R por área de aplicación.
 
 Instalar paquetes de R
 ----------------------
 
-Los paquetes se pueden instalar con la función de R `install.packages()`. Para
+Los paquetes se pueden instalar con la función de R ``install.packages()``. Para
 instalar un paquete se pasa su nombre como primer argumento. El código a
 continuación instala el paquete **knitr** desde CRAN.
 
@@ -236,7 +236,7 @@ Instalación desde RStudio
 -------------------------
 
 Desde la interfaz de RStudio se pueden instalar desde el menu
-`Tools>Install Packages...`, o bien desde la pestaña *Packages* del panel
+``Tools>Install Packages...``, o bien desde la pestaña *Packages* del panel
 *Ayuda*.
 
 En ambos casos se despliega un diálogo de instalación de paquetes que permite
@@ -255,19 +255,19 @@ básicas de este repositorio mediante las instrucciones:
    source("http://bioconductor.org/biocLite.R")
    biocLite()
 
-El primer comando carga funciones de R desde el script `biocLite.R`, el segundo
+El primer comando carga funciones de R desde el script ``biocLite.R``, el segundo
 ejecuta una función contenida en este.
 
 A partir de este momento, Bioconductor queda configurado como repositorio y
 es posible instalar paquetes del mismo utilizando la función
-`install_packages()`.
+``install_packages()``.
 
 Cargar paquetes
 ---------------
 
 Para que las funcionalidades de los paquetes estén disponibles en la sesión de
 R tienen que ser *cargados* en la memoria. Esto se realiza mediante la función
-`library()`. Por ejemplo, para cargar el paquete `reshape`:
+``library()``. Por ejemplo, para cargar el paquete ``reshape``:
 
 .. code-block:: r
 
