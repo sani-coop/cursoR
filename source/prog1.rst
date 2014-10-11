@@ -127,7 +127,7 @@ del vector a crear:
 Mezcla de objetos
 -----------------
 
-Si se mezclan valores de distintas clases en un vector, estos se "coercionan".
+Si se mezclan valores de distintas clases en un vector, estos se "coercen".
 Es decir, se cambia la clase de los valores para obligar que todos sean de la
 misma clase.
 
@@ -142,7 +142,7 @@ misma clase.
 
 Funciones del tipo ``as.numeric()`` o ``as.logical`` se pueden utilizar para
 realizar una coerción explícita del vector. Cuando los valores no pueden ser
-coercionados al tipo indicado devuelve valores especiales del tipo ``NA``
+coercidos al tipo indicado devuelve valores especiales del tipo ``NA``
 (No disponible, "Not Available").
 
 .. code-block:: rconsole
@@ -712,9 +712,9 @@ dentro de la función. Por ejemplo, el siguiente código corre sin problemas.
 En este caso, como b nunca es utilizado, no genera error. De hecho, se
 ejecutarían todas las sentencias hasta encontrar una referencia a ``b``.
 
-Se puede utilizar ``...`` para indicar un número de argumentos variable, o el pase
-de argumentos de forma implícita. Generalmente se utilizan para extender
-funciones.
+Se puede utilizar ``...`` para indicar un número de argumentos variable,
+o el pase de argumentos de forma implícita. Generalmente se utilizan para
+extender funciones.
 
 .. code-block:: r
 
@@ -722,8 +722,8 @@ funciones.
    plot(x, y, type = type, ...)
    }
 
-Los argumentos formales que aparecen después de ``...`` deben ser explícitos y no
-admiten coincidencias parciales.
+Los argumentos formales que aparecen después de ``...`` deben ser explícitos
+y no admiten coincidencias parciales.
 
 .. code-block:: r
 
@@ -769,6 +769,91 @@ Esta lista se determina utilizando la función ``search()``
     [7] "package:datasets"  "package:methods"   "Autoloads"
    [10] "package:base"
 
+Enlazando valores a símbolos
+----------------------------
+
+* El *entorno global* o espacio de trabajo del usuario siempre es el primer
+  elemento de la lista de búsqueda y el paquete ``base`` siempre es el último.
+* Los objetos se buscan en el orden de la lista de búsqueda hasta que se
+  encuentra una coincidencia.
+* Cuando se carga un usuario usando ``library()`` el espacio de nombres de
+  ese paquete se sitúa en la segunda posición y todos los demás quedan debajo.
+* Nótese que R tiene un espacio de nombres separado para funciones y no
+  funciones por lo que es posible tener el objeto de nombre "c" y una función
+  de nombre "c".
+
+Las *reglas de alcance* determinan como un valor es asociado con una variable
+libre en una función.
+
+Alcance léxico
+--------------
+
+R utiliza *alcance léxico* o *alcance estático*. Una alternativa es el
+*alcance dinámico*.
+
+El alcance léxico es particularmente útil para simplificar cálculos
+estadísticos. En R significa:
+
+**Los valores de las variables libres se buscan en el entorno donde fue
+definido la variable.**
+
+Consideremos el siguiente ejemplo:
+
+.. code-block:: r
+
+    make.power <- function(n) {
+        pow <- function(x) {
+            x^n
+        }
+        pow
+    }
+
+Luego se podría tener:
+
+.. code-block:: rconsole
+
+    > cube <- make.power(3)
+    > square <- make.power(2)
+    > cube(3)
+    [1] 27
+    > square(3)
+    [1] 9
+
+Como se ve, las funciones ``cube()`` y ``square()`` toman el valor de ``n``
+de las asignación que se hace al llamar a ``make.power()``.
+
 
 Manejo de datos temporales
 ==========================
+
+R cuenta con una representación especial para fechas y el tiempo.
+
+Las fechas se representan mediante la clase ``Date``. Y se almacenan
+internamente como el número de días desde ``1970-01-01``.
+
+Una cadena de caracteres puede ser coercida a la clase ``Date`` utilizando
+la función ``as.date()``.
+
+.. code-block:: rconsole
+
+    > x <- as.Date("1970-01-01")
+    > x
+    [1] "1970-01-01"
+    > x + 1
+    [1] "1970-01-02"
+    > y <- as.Date("1970-02-01")
+    > y - x
+    Time difference of 31 days
+
+El tiempo se representa usando las clases ``POSIXct`` o ``POSIXlt``. Y se
+almacenan internamente como el número de segundos desde ``1970-01-01``.
+
+* ``POSIXct`` es un entero grande, útil para almacenar valores temporales en un
+  data frame;
+* ``POSIXlt`` es una lista que almacena información adicional como el día de la
+  semana , el día del año, mes, y día del mes.
+
+Hay funciones genéricas que funcionan en fechas y tiempos:
+* ``weekdays()`` : devuelve el día de la semana.
+* ``months()`` : devuelve el nombre del mes.
+* ``quarters()`` : devuelve el número del trimestre ("Q1", "Q2", "Q3", or "Q4")
