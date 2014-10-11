@@ -9,29 +9,29 @@ de mejora de rendimiento del código.
 Bucles en la línea de comando
 =============================
 
-Hacer bucles `for`, `while` es muy útil cuando se programa, pero no resulta especialmente sencillo cuando se trabaja
+Hacer bucles ``for``, ``while`` es muy útil cuando se programa, pero no resulta especialmente sencillo cuando se trabaja
 interactivamente con la línea de comando. Es por ello que hay algunas funciones que implementan bucles para hacer el
 trabajo más sencillo.
 
-- `lapply`: Bucle a lo largo de una lista que evalúa una función en cada elemento
+- ``lapply``: Bucle a lo largo de una lista que evalúa una función en cada elemento
 
-- `sapply`: Funciona del mismo modo que `lapply` pero trata de simplificar el resultado
+- ``sapply``: Funciona del mismo modo que ``lapply`` pero trata de simplificar el resultado
 
-- `apply`: Aplica una función sobre los márgenes de un arreglo
+- ``apply``: Aplica una función sobre los márgenes de un arreglo
 
-- `tapply`: Aplica una función sobre un subconjunto de un vector
+- ``tapply``: Aplica una función sobre un subconjunto de un vector
 
-- `mapply`: Una versión multivariante de `lapply`
-
-
-Existe una función auxiliar llamada `split` que resulta también útil particularmente de modo conjunto con `lapply`
+- ``mapply``: Una versión multivariante de ``lapply``
 
 
-`laply`
+Existe una función auxiliar llamada ``split`` que resulta también útil particularmente de modo conjunto con ``lapply``
+
+
+``laply``
 ^^^^^^^
 
-`lapply` toma tres argumentos: (1) una lista d `X`; (2) una función (o el nombre de una función) FUN; (3) otros
-argumentos a través de su ... argumento. Si `X` no es una lista, será forzado a serlo utilizando as.list.
+``lapply`` toma tres argumentos: (1) una lista d ``X``; (2) una función (o el nombre de una función) FUN; (3) otros
+argumentos a través de su ... argumento. Si ``X`` no es una lista, será forzado a serlo utilizando as.list.
 
 .. code-block:: r
 
@@ -49,7 +49,7 @@ argumentos a través de su ... argumento. Si `X` no es una lista, será forzado 
 
 El bucle actual se realiza internamente en código C
 
-`lapply` siempre devuelve una lista, dependiendo de la clase de la salida.
+``lapply`` siempre devuelve una lista, dependiendo de la clase de la salida.
 
 .. code-block:: r
 
@@ -115,7 +115,7 @@ El bucle actual se realiza internamente en código C
     [1] 1.195114 3.594027 2.930794 2.766946
 
 
-`lapply` y sus amigas tienen un uso muy importante en funciones *anónimas*.
+``lapply`` y sus amigas tienen un uso muy importante en funciones *anónimas*.
 
 .. code-block:: r
 
@@ -146,9 +146,9 @@ Una función anónima para extraer la primera columna de cada matriz
     [1] 1 2 3
 
 
-`sapply`
+``sapply``
 ^^^^^^^^
-`sapply` trata de simplificar el resultado de `lapply` si es posible.
+``sapply`` trata de simplificar el resultado de ``lapply`` si es posible.
 
 - Si el resultado es una lista donde cada elemento tiene longitud 1, entonces se devuelve un vector
 
