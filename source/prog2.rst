@@ -225,8 +225,8 @@ El trabajo con distribuciones tipo Normal requiere el uso de estas cuatro funcio
     qnorm(p, mean = 0, sd = 1, lower.tail = TRUE, log.p = FALSE)
     rnorm(n, mean = o, sd = 1)
 
-If :math:"\Phi" es la función de distribución acumulada de una distribución Normal estandar, entonces
-``pnorm(q)``=:math:"\Phi(q)" y ``qnorm(p)``= :math:"\Phi^{-1}(p)"
+If :math:`\Phi` es la función de distribución acumulada de una distribución Normal estandar, entonces
+``pnorm(q)`` = :math:`\Phi(q)` y ``qnorm(p)`` = :math:`\Phi^{-1}(p)`
 
 
 
