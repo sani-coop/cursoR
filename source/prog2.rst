@@ -191,7 +191,7 @@ Simulación
 
 
 Generación de números aleatorios
-^^^^
+^^^^^
 
 Las funciones para distribuciones aleatorias en R son:
 
@@ -382,7 +382,221 @@ Resumen
 
 Herramientas de depuración
 ==========================
-debugging
+
+Algunos indicadores de que algo no está funcionando bien:
+
+- ``message``: Un mensaje genérico de notificación/diagnóstico producido por la función ``message``. La ejecución de la
+  función continúa
+
+- ``warning``: Un indicador de que hay algún problema aunque no neesariamente es fatal. Es generado por la función ``warning``.
+  La función continúa ejecutándose.
+
+- ``error``: Un indicador de que ocurrió un problema fatal. La ejecución se interrumpe. Se produce por la función ``stop``
+
+- ``condition``: Un concepto genérico para indicar que algo inesperado puede ocurrir. Los programadores pueden crear sus
+  propias condiciones.
+
+
+``warning``
+^^^^^^^^^^^^
+
+.. code-block:: r
+
+    log(-1)
+
+    ## Warning: NaNs produced
+
+    ## [1] NaN
+
+
+.. code-block:: r
+
+    printmessage <- function(x) {
+            if(x > 0)
+                   print("x is greater than zero")
+            else
+                   print("x is less than or equal to zero")
+            invisible(x)
+    }
+
+.. code-block:: r
+
+    printmessage <- function(x) {
+        if (x > 0)
+            print("x is greater than zero") else print("x is less than or equal to zero")
+        invisible(x)
+    }
+    printmessage(1)
+
+    ## [1] "x es mayor que cero"
+
+    printmessage(NA)
+
+    ## Error: missing value where TRUE/FALSE needed
+
+
+.. code-block:: r
+
+    printmessage2 <- function(x) {
+            if(is.na(x))
+                    print("x es un valor desconocido!")
+            else if(x > 0)
+                    print("x es mayor que cero")
+            else
+                    print("x es menor o igual a cero")
+            invisible(x)
+    }
+
+.. code-block:: r
+
+    printmessage2 <- function(x) {
+        if (is.na(x))
+            print("x is a missing value!") else if (x > 0)
+            print("x is greater than zero") else print("x is less than or equal to zero")
+        invisible(x)
+    }
+    x <- log(-1)
+
+    ## Warning: NaNs produced
+
+    printmessage2(x)
+
+    ## [1] "x es un valor desconocido!"
+
+¿Cómo saber que algo está mal en una función?
+
+- ¿Cuál es la entrada? ¿Puede ser llamada la función?
+
+- ¿Qué se espera recibir? Saludos, mensajes otros resultados
+
+- ¿Qué se obtuvo?
+
+- ¿En qué difiere el resultado obtenido del esperado?
+
+- ¿Las expectativas iniciales fueron correctas?
+
+- ¿El problema es reproducible (exactamente)?
+
+
+Herramientas de depuración en R
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Las herramientas básicas para depuración en R son
+
+- ``traceback``: imprime la lista de llamadas a una función después que ocurre un error. No produce ningun resultado si
+  no hay error.
+
+- ``debug``: marca una función para el modo "depuración" lo cual permite seguir la ejecución de una función una línea
+  por vez.
+
+- ``browser``: suspende la ejecución de una función donde sea que sea llamada y coloca la función en modo depuración.
+
+- ``trace``: permite insertar un código de depuración en una función en lugares específicos.
+
+- ``recover``: permite modificar el comportamiento del error de modo que pueda navegar por la lista de llamados a la
+  función
+
+
+Estas son herramientas interactivas específicamente diseñadas para permitir escoger a través de una función.
+
+Existe también técnicas más contundentes como la inserción de declaraciones ``print/cat`` en la función.
+
+
+traceback
+^^^^^^^^^^
+
+.. code-block:: r
+
+    > mean(x)
+    Error in mean(x) : object 'x' not found
+    > traceback()
+    1: mean(x)
+    >
+
+.. code-block:: r
+
+    > lm(y ~ x)
+    Error in eval(expr, envir, enclos) : object ’y’ not found
+    > traceback()
+    7: eval(expr, envir, enclos)
+    6: eval(predvars, data, env)
+    5: model.frame.default(formula = y ~ x, drop.unused.levels = TRUE)
+    4: model.frame(formula = y ~ x, drop.unused.levels = TRUE)
+    3: eval(expr, envir, enclos)
+    2: eval(mf, parent.frame())
+    1: lm(y ~ x)
+
+
+debug
+^^^^^^
+
+.. code-block:: r
+
+    > debug(lm)
+    > lm(y ~ x)
+        debugging in: lm(y ~ x)
+        debug: {
+        ret.x <- x
+        ret.y <- y
+        cl <- match.call()
+        ...
+        if (!qr)
+            z$qr <- NULL
+        z
+    }
+    Browse[2]>
+
+.. code-block:: r
+
+    Browse[2]> n
+    debug: ret.x <- x
+    Browse[2]> n
+    debug: ret.y <- y
+    Browse[2]> n
+    debug: cl <- match.call()
+    Browse[2]> n
+    debug: mf <- match.call(expand.dots = FALSE)
+    Browse[2]> n
+    debug: m <- match(c("formula", "data", "subconjunto", "pesos", "na.accion",
+        "offset"), names(mf), 0L)
+
+recover
+^^^^^^^^
+
+.. code-block:: r
+
+    > options(error = recover)
+    > read.csv("nosuchfile")
+    Error in file(file, "rt") : cannot open the connection
+    In addition: Warning message:
+    In file(file, "rt") :
+        cannot open file ’nosuchfile’: No such file or directory
+
+    Enter a frame number, or 0 to exit
+
+
+    1: read.csv("nosuchfile")
+    2: read.table(file = file, header = header, sep = sep, quote = quote, dec =
+    3: file(file, "rt")
+
+
+    Selection:
+
+
+Resumen
+^^^^^^^^
+
+- Hay tres indicadores principales de una condición/problema: ``message``, ``warning``, ``error``
+
+    - sólo un ``error`` es fatal
+
+- Cuando se analiza una función con un problema, hay que asegurarse que el problema puede ser reproducido, clarificar el
+  estatus de las expectativas y cómo la salida difiere de las expectativas iniciales.
+
+- Las herramientas interactivas de depuración ``traceback``, ``debug``, ``browser``, ``trace`` y ``recover`` pueden usarse
+  para encontrar código con problemas en funciones.
+
+- ¡Las herramientas de depuración no sustituyen al razoamiento!
 
 
 Mejora del rendimiento del código
