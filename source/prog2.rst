@@ -7,7 +7,7 @@ de mejora de rendimiento del código.
 
 
 Bucles en la línea de comando
-=============================
+===============================
 
 Hacer bucles ``for``, ``while`` es muy útil cuando se programa, pero no resulta especialmente sencillo cuando se trabaja
 interactivamente con la línea de comando. Es por ello que hay algunas funciones que implementan bucles para hacer el
@@ -187,11 +187,11 @@ Una función anónima para extraer la primera columna de cada matriz
 
 
 Simulación
-==========
+============
 
 
 Generación de números aleatorios
---------------------------------
+^^^^
 
 Las funciones para distribuciones aleatorias en R son:
 
@@ -228,7 +228,156 @@ El trabajo con distribuciones tipo Normal requiere el uso de estas cuatro funcio
 If :math:`\Phi` es la función de distribución acumulada de una distribución Normal estandar, entonces
 ``pnorm(q)`` = :math:`\Phi(q)` y ``qnorm(p)`` = :math:`\Phi^{-1}(p)`
 
+.. code-block:: r
 
+    > x <- rnorm(10)
+    > x
+      [1] 1.38380206 0.48772671 0.53403109 0.66721944
+      [5] 0.01585029 0.37945986 1.31096736 0.55330472
+      [9] 1.22090852 0.45236742
+    > x <- rnorm(10, 20, 2)
+    > x
+      [1] 23.38812 20.16846 21.87999 20.73813 19.59020
+      [6] 18.73439 18.31721 22.51748 20.36966 21.04371
+    > summary(x)
+       Min.   1st Qu. Median  Mean    3rd Qu.  Max.
+      18.32   19.73   20.55   20.67   21.67    23.39
+
+
+Configurar semillas de números aleatorios con ``set.seed`` asegura su replicación
+
+.. code-block:: r
+
+    > set.seed(1)
+    > rnorm(5)
+    [1] -0.6264538  0.1836433  -0.8356286  1.5952808
+    [5]  0.3295078
+    > rnorm(5)
+    [1] -0.8204684  0.4874291   0.7383247  0.5757814
+    [5] -0.3053884
+    > set.seed(1)
+    > rnorm(5)
+    [1] -0.6264538  0.1836433  -0.8356286  1.5952808
+    [5]  0.3295078
+
+
+¡Recuerde siempre establecer la semilla del número aleatorio cuando ejecuta una simulación!
+
+
+Para generar datos Pisson
+
+.. code-block:: r
+
+    > rpois(10, 1)
+     [1] 3 1 0 1 0 0 1 0 1 1
+    > rpois(10, 2)
+    [1] 6 2 2 1 3 2 2 1 1 2
+    > rpois(10, 20)
+    [1] 20 11 21 20 20 21 17 15 24 20
+
+
+    > ppois(2, 2)  ## Cumulative distribution
+    [1] 0.6766764  ## Pr(x <= 2)
+    > ppois(4, 2)
+    [1] 0.947347   ## Pr(x <= 4)
+    > ppois(6, 2)
+    [1] 0.9954662  ## Pr(x <= 6)
+
+
+Generando números aleatorios a partir de un modelo lineal
+-------------------------------------------------------------
+
+Supongamos que queremos hacer una simulación a partir del siguiente modelo lineal
+
+
+    :math:`y = \beta_0 + \beta_1 x + \epsilon`
+
+
+donde :math:`\epsilon \sim N(0,2^2)`. Se asume :math:`x ~ N(0,1^2), \beta_0 = 0.5` y :math:`\beta_1 = 2`
+
+.. code-block:: r
+
+    > set.seed(20)
+    > x <- rnorm(100)
+    > e <- rnorm(100, 0, 2)
+    > y <- 0.5 + 2 * x + e
+    > summary(y)
+       Min.     1st Qu.   Median
+     -6.4080   -1.5400    0.6789  0.6893  2.9300   6.5050
+    > plot(x, y)
+
+
+¿Qué pasa si ``x`` es binaria?
+
+.. code-block:: r
+
+    > set.seed(10)
+    > x <- rbinom(100, 1, 0.5)
+    > e <- rnorm(100, 0, 2)
+    > y <- 0.5 + 2 * x + e
+    > summary(y)
+       Min.   1st Qu.   Median
+    -3.4940  -0.1409    1.5770    1.4320   2.8400   6.9410
+    > plot(x, y)
+
+
+Generando números aleatorios a partir de un Modelo Lineal Generalizado
+-------------------------------------------------------------------------
+
+Supongamos que queremos hacer una simulación a partir de un modelo Poisson donde
+
+:math:`Y \sim Poisson(\mu)`
+
+:math:`log \mu = \beta_0 + \beta_1x`
+
+y :math:`\beta_0 = 0.5` y :math:`\beta_1 = 0.3`
+
+En ese caso, se requiere el uso de la función ``rpois``
+
+.. code-block:: r
+
+    > set.seed(1)
+    > x <- rnorm(100)
+    > log.mu <- 0.5 + 0.3 * x
+    > y <- rpois(100, exp(log.mu))
+    > summary(y)
+       Min.  1st Qu. Median    Mean  3rd Qu.  Max.
+       0.00    1.00   1.00    1.55    2.00   6.00
+    > plot(x, y)
+
+Muestreo Aleatorio
+--------------------
+
+La función ``sample`` hace un gráfico aleatorio a partir de un conjunto específico de objetos (escalares) permitiéndole
+hacer un muestreo a partir de distribuciones arbitrarias.
+
+.. code-block:: r
+
+    > set.seed(1)
+    > sample(1:10, 4)
+    [1] 3 4 5 7
+    > sample(1:10, 4)
+    [1] 3 9 8 5
+    > sample(letters, 5)
+    [1] "q" "b" "e" "x" "p"
+    > sample(1:10)  ## permutation
+     [1] 4 710 6 9 2 8 3 1 5
+    > sample(1:10)
+     [1] 2 3 4 1 9 5 10 8 6 7
+    > sample(1:10, replace = TRUE) ## Sample w/replacement
+     [1] 2 9 7 8 2 8 5 9 7 8
+
+Resumen
+----------
+
+- Para realizar gráficos de muestras para distribuciones específicas de probabilidad pueden utilizarse las funciones ``r*``
+
+- Las distribuciones estandar son: Normal, Poisson, Binomial, Exponencial, Gamma, etc.
+
+- La función ``sample`` puede utilizarse para graficar muestras aleatorias a partir de vectores arbitrarios
+
+- Para la replicación del modelo, resulta muy importante configurar el generador de números aleatorios a través de
+  ``set.seed``
 
 
 Herramientas de depuración
