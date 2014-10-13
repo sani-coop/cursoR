@@ -332,16 +332,101 @@ formato JSON.
 Herramientas básicas para limpiar y manipular datos
 ===================================================
 
+Un repaso sobre filtros
+-----------------------
 
+.. code-block:: r
 
-Filtrar
--------
+    set.seed(13435)
+    X <- data.frame("var1"=sample(1:5),"var2"=sample(6:10),"var3"=sample(11:15))
+    X <- X[sample(1:5),]; X$var2[c(1,3)] = NA
+    X
 
-Crear nuevos conjuntos de datos
+Se puede acceder a los datos de un data frame con una notación matricial
+``data[num_fila, num_col|nombre_col]``. O bien de la forma
+``data$nombre_col[num_fila]``.
+
+Pasar un vector como índice permite reordenar o seleccionar (incluso
+repetidas) filas y/o columnas del data frame.
+
+Las columnas se pueden acceder ya sea por posición o por nombre.
+
+.. code-block:: r
+
+    X[,1]
+    X[,"var1"]
+    X[1:2,"var2"]
+
+También se pueden aplicar filtros como expresiones lógicas. Estas devuelven
+vectores lógicos.
+
+.. code-block:: r
+
+    X[(X$var1 <= 3 & X$var3 > 11), ]
+    X[(X$var1 <= 3 | X$var3 > 15), ]
+
+La función ``which()`` devuelve los índices para los que se cumple una
+condición.
+
+.. code-block:: r
+
+    X[which(X$var2 > 8), ]
+
+Para ordenar un vector se puede utilizar la función ``sort()``. El argumento
+``decreasing`` indica si se ordena en orden decreciente,
+y ``na.last`` si los valores faltantes se colocan al final.
+
+.. code-block:: r
+
+    sort(X$var1)
+    sort(X$var1, decreasing=TRUE)
+    sort(X$var2, na.last=TRUE)
+
+La función ``order()`` devuelve una lista con los índices que permiten
+reordenar una columna. Se pueden introducir columnas adicionales para romper
+empates. Es útil para ordenar un data frame completo.
+
+.. code-block:: r
+
+    X[order(X$var1), ]
+    X[order(X$var1,X$var3), ]
+
+El paquete ``plyr`` ofrece un conjunto de herramientas para facilitar tareas
+de separar, aplicar y combinar datos. La función ``arrange()`` de ``plyr``
+ofrece un mecanismo mas comprensible para ordenar datos.
+
+.. code-block:: r
+
+    library(plyr)
+    arrange(X, var1)
+    arrange(X, desc(var1))
+
+Para añadir un nueva variable a un data frame simplemente se asigna un vector
+a un nuevo nombre de columna.
+
+.. code-block:: r
+
+    X$var4 <- rnorm(5)
+    X
+
+Se pueden añadir las funciones ``cbind()`` y ``rbind()`` para unir vectores o
+data frames como columnas o filas respectivamente. Las dimensiones de los
+objetos deben coincidir.
+
+.. code-block:: r
+
+Y <- cbind(X,rnorm(5))
+Y
+
+Mas sobre este tema en la `notas de Andrew Jaffe`_.
+
+.. _notas de Andrew Jaffe: http://www.biostat.jhsph.edu/~ajaffe/lec_winterR/Lecture%202.pdf
+
+Haciendo resúmenes de sus datos
 -------------------------------
 
-Generar nuevas variables
-------------------------
+
+
 
 Conectar con bases de datos
 ===========================
