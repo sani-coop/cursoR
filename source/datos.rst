@@ -425,7 +425,117 @@ Mas sobre este tema en la `notas de Andrew Jaffe`_.
 Haciendo resúmenes de sus datos
 -------------------------------
 
+Para los siguientes ejemplos, empezar por descargar algunos datos de la web:
 
+.. code-block:: r
+
+    if(!file.exists("./data")){dir.create("./data")}
+    fileUrl <- "https://data.baltimorecity.gov/api/views/k5ry-ef3g/rows.csv?accessType=DOWNLOAD"
+    download.file(fileUrl,destfile="./data/restaurants.csv",method="curl")
+    restData <- read.csv("./data/restaurants.csv")
+
+Un pequeño vistazo a los datos descargados:
+
+.. code-block:: r
+
+    head(restData, n=3)
+    tail(restData, n=3)
+
+Se obtiene un resumen descriptivo:
+
+.. code-block:: r
+    summary(restData)
+
+Información en mayor profundidad:
+
+.. code-block:: r
+
+    str(restData)
+
+Los cuantiles de las variables cuantitativas:
+
+.. code-block:: r
+
+    quantile(restData$councilDistrict, na.rm=TRUE)
+    quantile(restData$councilDistrict, probs=c(0.5,0.75,0.9))
+
+Se construye una tabla de frecuencias
+
+.. code-block:: r
+
+    table(restData$zipCode, useNA="ifany")
+
+Ahora una tabla de frecuencias cruzadas:
+
+.. code-block:: r
+
+    table(restData$councilDistrict, restData$zipCode)
+
+Se verifica la existencia de valores faltantes:
+
+.. code-block:: r
+
+    sum(is.na(restData$councilDistrict))
+    any(is.na(restData$councilDistrict))
+    all(restData$zipCode > 0)
+
+Valores faltantes por columna:
+
+.. code-block:: r
+
+    colSums(is.na(restData))
+    all(colSums(is.na(restData))==0)
+
+Frecuencia de valores con características particulares.
+
+.. code-block:: r
+
+    table(restData$zipCode %in% c("21212"))
+    table(restData$zipCode %in% c("21212", "21213"))
+
+Valores con características particulares.
+
+.. code-block:: r
+
+    restData[restData$zipCode %in% c("21212", "21213"), ]
+
+Tablas cruzadas
+
+Se toma como ejemplo de referencia la tabla `UCBAdmissions`. Se convierte a
+data frame.
+
+.. code-block:: r
+
+    data(UCBAdmissions)
+    DF = as.data.frame(UCBAdmissions)
+    summary(DF)
+
+Se crea una tabla de referencia cruzada, nótese como se utilizan los factores
+``Gender`` y ``Admit``.
+
+.. code-block:: r
+
+    xt <- xtabs(Freq ~ Gender + Admit, data=DF)
+    xt
+
+Para crear *tablas planas*. Empezamos por crear una columna que nos permita
+tener observaciones únicas. Luego se aplica la función ``ftable()`` (flat table)
+
+.. code-block:: r
+
+    warpbreaks$replicate <- rep(1:9, len = 54)
+    xt = xtabs(breaks ~., data=warpbreaks)
+    xt
+    ftable(xt)
+
+Para obtener una medida del uso de memoria de cualquier objeto mediante la
+función ``object.size()``.
+
+.. code-block:: r
+
+    fakeData = rnorm(1e5)
+    object.size(fakeData)
+    print(object.size(fakeData),units="Mb")
 
 
 Conectar con bases de datos
