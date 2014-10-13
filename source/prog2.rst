@@ -151,10 +151,10 @@ Una función anónima para extraer la primera columna de cada matriz
 
 ``sapply`` trata de simplificar el resultado de ``lapply`` si es posible.
 
-- Si el resultado es una lista donde cada elemento tiene longitud 1, entonces se devuelve un vector
-
-- Si el resultado es una lita donde cada elemento es un vector de la misma longitus (> 1), se devuelve una matriz
-
+- Si el resultado es una lista donde cada elemento tiene longitud 1, entonces
+  se devuelve un vector
+- Si el resultado es una lita donde cada elemento es un vector de la misma
+  longitud (> 1), se devuelve una matriz
 - Si no se puede encontrar, se devuelve una lista.
 
 
@@ -189,7 +189,6 @@ Una función anónima para extraer la primera columna de cada matriz
 
 Simulación
 ============
-
 
 Generación de números aleatorios
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -827,8 +826,7 @@ Resumen
 
 - ``Rprof()`` ejecuta el refinador de desempeño de analisis del código R
 
-- ``summaryRprof()`` sumariza la salida de ``Rprof()`` y asigna un porcentaje al tiempo utilizado en cada función (con
-  dos tipos de normalización)
+- ``summaryRprof()`` sumariza la salida de ``Rprof()`` y asigna un porcentaje al tiempo utilizado en cada función (con dos tipos de normalización)
 
 - Es sano cortar el código en funciones de modo que el refinador pueda aportar información útil sobre donde se está
   usando el tiempo.
