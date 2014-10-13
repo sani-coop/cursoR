@@ -332,18 +332,294 @@ formato JSON.
 Herramientas básicas para limpiar y manipular datos
 ===================================================
 
+Un repaso sobre filtros
+-----------------------
 
+.. code-block:: r
 
-Filtrar
--------
+    set.seed(13435)
+    X <- data.frame("var1"=sample(1:5),"var2"=sample(6:10),"var3"=sample(11:15))
+    X <- X[sample(1:5),]; X$var2[c(1,3)] = NA
+    X
 
-Crear nuevos conjuntos de datos
+Se puede acceder a los datos de un data frame con una notación matricial
+``data[num_fila, num_col|nombre_col]``. O bien de la forma
+``data$nombre_col[num_fila]``.
+
+Pasar un vector como índice permite reordenar o seleccionar (incluso
+repetidas) filas y/o columnas del data frame.
+
+Las columnas se pueden acceder ya sea por posición o por nombre.
+
+.. code-block:: r
+
+    X[,1]
+    X[,"var1"]
+    X[1:2,"var2"]
+
+También se pueden aplicar filtros como expresiones lógicas. Estas devuelven
+vectores lógicos.
+
+.. code-block:: r
+
+    X[(X$var1 <= 3 & X$var3 > 11), ]
+    X[(X$var1 <= 3 | X$var3 > 15), ]
+
+La función ``which()`` devuelve los índices para los que se cumple una
+condición.
+
+.. code-block:: r
+
+    X[which(X$var2 > 8), ]
+
+Para ordenar un vector se puede utilizar la función ``sort()``. El argumento
+``decreasing`` indica si se ordena en orden decreciente,
+y ``na.last`` si los valores faltantes se colocan al final.
+
+.. code-block:: r
+
+    sort(X$var1)
+    sort(X$var1, decreasing=TRUE)
+    sort(X$var2, na.last=TRUE)
+
+La función ``order()`` devuelve una lista con los índices que permiten
+reordenar una columna. Se pueden introducir columnas adicionales para romper
+empates. Es útil para ordenar un data frame completo.
+
+.. code-block:: r
+
+    X[order(X$var1), ]
+    X[order(X$var1,X$var3), ]
+
+El paquete ``plyr`` ofrece un conjunto de herramientas para facilitar tareas
+de separar, aplicar y combinar datos. La función ``arrange()`` de ``plyr``
+ofrece un mecanismo mas comprensible para ordenar datos.
+
+.. code-block:: r
+
+    library(plyr)
+    arrange(X, var1)
+    arrange(X, desc(var1))
+
+Para añadir un nueva variable a un data frame simplemente se asigna un vector
+a un nuevo nombre de columna.
+
+.. code-block:: r
+
+    X$var4 <- rnorm(5)
+    X
+
+Se pueden añadir las funciones ``cbind()`` y ``rbind()`` para unir vectores o
+data frames como columnas o filas respectivamente. Las dimensiones de los
+objetos deben coincidir.
+
+.. code-block:: r
+
+Y <- cbind(X,rnorm(5))
+Y
+
+Mas sobre este tema en la `notas de Andrew Jaffe`_.
+
+.. _notas de Andrew Jaffe: http://www.biostat.jhsph.edu/~ajaffe/lec_winterR/Lecture%202.pdf
+
+Haciendo resúmenes de sus datos
 -------------------------------
 
-Generar nuevas variables
-------------------------
+Para los siguientes ejemplos, empezar por descargar algunos datos de la web:
+
+.. code-block:: r
+
+    if(!file.exists("./data")){dir.create("./data")}
+    fileUrl <- "https://data.baltimorecity.gov/api/views/k5ry-ef3g/rows.csv?accessType=DOWNLOAD"
+    download.file(fileUrl,destfile="./data/restaurants.csv",method="curl")
+    restData <- read.csv("./data/restaurants.csv")
+
+Un pequeño vistazo a los datos descargados:
+
+.. code-block:: r
+
+    head(restData, n=3)
+    tail(restData, n=3)
+
+Se obtiene un resumen descriptivo:
+
+.. code-block:: r
+    summary(restData)
+
+Información en mayor profundidad:
+
+.. code-block:: r
+
+    str(restData)
+
+Los cuantiles de las variables cuantitativas:
+
+.. code-block:: r
+
+    quantile(restData$councilDistrict, na.rm=TRUE)
+    quantile(restData$councilDistrict, probs=c(0.5,0.75,0.9))
+
+Se construye una tabla de frecuencias
+
+.. code-block:: r
+
+    table(restData$zipCode, useNA="ifany")
+
+Ahora una tabla de frecuencias cruzadas:
+
+.. code-block:: r
+
+    table(restData$councilDistrict, restData$zipCode)
+
+Se verifica la existencia de valores faltantes:
+
+.. code-block:: r
+
+    sum(is.na(restData$councilDistrict))
+    any(is.na(restData$councilDistrict))
+    all(restData$zipCode > 0)
+
+Valores faltantes por columna:
+
+.. code-block:: r
+
+    colSums(is.na(restData))
+    all(colSums(is.na(restData))==0)
+
+Frecuencia de valores con características particulares.
+
+.. code-block:: r
+
+    table(restData$zipCode %in% c("21212"))
+    table(restData$zipCode %in% c("21212", "21213"))
+
+Valores con características particulares.
+
+.. code-block:: r
+
+    restData[restData$zipCode %in% c("21212", "21213"), ]
+
+Tablas cruzadas
+
+Se toma como ejemplo de referencia la tabla `UCBAdmissions`. Se convierte a
+data frame.
+
+.. code-block:: r
+
+    data(UCBAdmissions)
+    DF = as.data.frame(UCBAdmissions)
+    summary(DF)
+
+Se crea una tabla de referencia cruzada, nótese como se utilizan los factores
+``Gender`` y ``Admit``.
+
+.. code-block:: r
+
+    xt <- xtabs(Freq ~ Gender + Admit, data=DF)
+    xt
+
+Para crear *tablas planas*. Empezamos por crear una columna que nos permita
+tener observaciones únicas. Luego se aplica la función ``ftable()`` (flat table)
+
+.. code-block:: r
+
+    warpbreaks$replicate <- rep(1:9, len = 54)
+    xt = xtabs(breaks ~., data=warpbreaks)
+    xt
+    ftable(xt)
+
+Para obtener una medida del uso de memoria de cualquier objeto mediante la
+función ``object.size()``.
+
+.. code-block:: r
+
+    fakeData = rnorm(1e5)
+    object.size(fakeData)
+    print(object.size(fakeData),units="Mb")
+
 
 Conectar con bases de datos
 ===========================
 
+MySQL
+-----
 
+* `MySQL`_ Sistema de base de datos libre ampliamente usada.
+* Ampliamente utilizado por aplicaciones de Internet
+* Los dato están estructurados en:
+  * Bases de datos
+  * Tablas dentro de bases de datos
+  * Campos dentro de tablas
+* Cada fila es un registro
+
+Desde la adquisición de SUN por Oracle, existe una versión comunitaria de
+MySQL denominada MariaDB.
+
+.. _mySQL: http://en.wikipedia.org/wiki/MySQL
+
+Instalación de RMySQL
+---------------------
+
+* En Linux o Mac: ```install.packages("RMySQL")```
+* En Windows:
+  * Instrucciones oficiales - http://biostat.mc.vanderbilt.edu/wiki/Main/RMySQL
+    (tambien puede ser útil para los usuarios Mac/Linux)
+  * Guía potencialmente útil - http://www.ahschulz.de/2013/07/23/installing-rmysql-under-windows/
+
+
+Conexión a bases de datos. Obtener una lista de las bases de datos disponibles.
+
+.. code-block:: r
+
+    ucscDb <- dbConnect(MySQL(),user="genome",
+                        host="genome-mysql.cse.ucsc.edu")
+    result <- dbGetQuery(ucscDb,"show databases;"); dbDisconnect(ucscDb);
+    result
+
+Conexión a la base de datos "hg19" y obtener una lista de sus tablas.
+
+.. code-block:: r
+
+    hg19 <- dbConnect(MySQL(),user="genome", db="hg19",
+                        host="genome-mysql.cse.ucsc.edu")
+    allTables <- dbListTables(hg19)
+    length(allTables)
+    allTables[1:5]
+
+Para obtener las dimensiones de una tabla en particular
+
+.. code-block:: r
+
+    dbListFields(hg19,"affyU133Plus2")
+    dbGetQuery(hg19, "select count(*) from affyU133Plus2")
+
+Finalmente, obtener datos de la base de datos.
+
+.. code-block:: r
+
+    affyData <- dbReadTable(hg19, "affyU133Plus2")
+    head(affyData)
+
+Si se quiere obtener un subconjunto de la tabla.
+
+.. code-block:: r
+
+    query <- dbSendQuery(hg19, "select * from affyU133Plus2 where misMatches between 1 and 3")
+    affyMis <- fetch(query); quantile(affyMis$misMatches)
+    affyMisSmall <- fetch(query,n=10); dbClearResult(query);
+    dim(affyMisSmall)
+
+No hay que olvidar cerrar la conexión.
+
+.. code-block:: r
+
+    dbDisconnect(hg19)
+
+Recursos adicionales:
+
+* RMySQL vignette http://cran.r-project.org/web/packages/RMySQL/RMySQL.pdf
+* Lista de comandos http://www.pantz.org/software/mysql/mysqlcommands.html
+  * En ningún caso borrar, añadir, o enlazar tablas desde ensembl. Solamente
+  select.
+  * En general, ser cuidados con los comandos de MySQL
+* Un post con un buen resúmen de comandos http://www.r-bloggers.com/mysql-and-r/

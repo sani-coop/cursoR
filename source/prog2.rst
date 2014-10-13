@@ -27,8 +27,8 @@ trabajo más sencillo.
 Existe una función auxiliar llamada ``split`` que resulta también útil particularmente de modo conjunto con ``lapply``
 
 
-``laply``
-^^^^^^^
+``lapply``
+^^^^^^^^^^
 
 ``lapply`` toma tres argumentos: (1) una lista d ``X``; (2) una función (o el nombre de una función) FUN; (3) otros
 argumentos a través de su ... argumento. Si ``X`` no es una lista, será forzado a serlo utilizando as.list.
@@ -147,13 +147,14 @@ Una función anónima para extraer la primera columna de cada matriz
 
 
 ``sapply``
-^^^^^^^^
+^^^^^^^^^^
+
 ``sapply`` trata de simplificar el resultado de ``lapply`` si es posible.
 
-- Si el resultado es una lista donde cada elemento tiene longitud 1, entonces se devuelve un vector
-
-- Si el resultado es una lita donde cada elemento es un vector de la misma longitus (> 1), se devuelve una matriz
-
+- Si el resultado es una lista donde cada elemento tiene longitud 1, entonces
+  se devuelve un vector
+- Si el resultado es una lita donde cada elemento es un vector de la misma
+  longitud (> 1), se devuelve una matriz
 - Si no se puede encontrar, se devuelve una lista.
 
 
@@ -189,30 +190,24 @@ Una función anónima para extraer la primera columna de cada matriz
 Simulación
 ============
 
-
 Generación de números aleatorios
-^^^^^
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 Las funciones para distribuciones aleatorias en R son:
 
-- ``rnorm``: genera variables aleatorias de tipo Normal con una media y desviación estándar dadas.
-
-- ``dnorm``: evalúa la densidad de probabilidad de una Normal (con una media y desviación estándar dadas) en un punto (o
-vector de puntos)
-
-- ``pnorm``: evalúa la función de la distribución acumulada para una distribución Normal
-
+- ``rnorm``: genera variables aleatorias de tipo Normal con una media y
+  desviación estándar dadas.
+- ``dnorm``: evalúa la densidad de probabilidad de una Normal (con una media y
+  desviación estándar dadas) en un punto (o vector de puntos)
+- ``pnorm``: evalúa la función de la distribución acumulada para una
+  distribución Normal
 - ``rpois``: genera variables aleatorias Poisson con un índice dado.
-
 
 Las funciones de distribución de probabilidad, generalmente tienen cuatro funciones asociadas a ellas. Estas son:
 
 - ``d`` para densidad
-
 - ``r`` para generación de número aleatorio
-
 - ``p`` para distribución acumulada
-
 - ``q`` para función cuantil.
 
 
@@ -831,8 +826,7 @@ Resumen
 
 - ``Rprof()`` ejecuta el refinador de desempeño de analisis del código R
 
-- ``summaryRprof()`` sumariza la salida de ``Rprof()`` y asigna un porcentaje al tiempo utilizado en cada función (con
-  dos tipos de normalización)
+- ``summaryRprof()`` sumariza la salida de ``Rprof()`` y asigna un porcentaje al tiempo utilizado en cada función (con dos tipos de normalización)
 
 - Es sano cortar el código en funciones de modo que el refinador pueda aportar información útil sobre donde se está
   usando el tiempo.
