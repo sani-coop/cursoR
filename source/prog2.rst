@@ -602,7 +602,247 @@ Resumen
 Mejora del rendimiento del código
 =================================
 
+¿Por qué el código es tan lento?
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-profiling
+- La refinación es una forma sistemática de examinar cuánto tiempo se demoran las distintas partes de un programa.
+
+- Es útil cuando se intenta optimizar el código
+
+- A menudo el código se ejecuta bien una vez, pero ¿qué ocurre cuando debe generarse un bucle para 1.000 iteraciones?
+  ¿es lo suficientemente rápido?
+
+- La refinación es mejor que el tanteo.
+
+Sobre optimizar el código
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+- Obtener el mayor impacto en la aceleración del código depende de conocer en dónde se demora el código más tiempo.
+
+- No puede realizarse la optimización del código sin un analisis de desempeño o un refinamiento.
+
+
+        *Debemos olvidarnos de las pequeñas eficiencias, casi un 97% de las veces decir: optimización prematura es la raíz de
+        todos los males
+        Donald Knuth*
+
+
+
+Principios generales de optimización
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+- Diseñe primero, luego optimice
+
+- Recuerde: la optimización prematura es la raíz de todos los males
+
+- Mida (recolecte datos), no tantee.
+
+- ¡Si va a hacer ciencia, debe utilizar los mismos principios!
+
+
+Utilizando ``system.time()``
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+- Tome una expresión arbitraria de R como entrada (puede estar encerrada entre llaves) y observe la cantidad de tiempo
+  que se toma en evaluar esa expresión.
+
+- Calcule, en segundos, el tiempo necesitado para ejecutar una expresión
+
+    - Si hay un error, de tiempo hasta que ocurra
+
+- Devuelva un objeto de clase ``proc_time``
+
+    - ``user time``: tiempo asignado al(os) CPU(s) para esta expresión
+    - ``elapsed time``: tiempo de "reloj de pared"
+
+- Con frecuencia, el ``user time`` y el ``elapsed time``, para tareas correctas de cómputo, tienen valores relativamente
+  similares.
+
+- ``elapsed time`` puede ser *mayor* que ``user time``, si el CPU gasta mucho tiempo esperando.
+
+- ``elapsed time`` puede ser *menor* que ``user time`` si la máquina es multicore o multi procesador (y los utiliza)
+
+    - Librerías BLAS multiciclo (vcLib/Accelerate, ATLAS, ACML, MKL)
+    - Procesamiento paralelo a través del paquete ``parallel``
+
+.. code-block:: r
+
+    ## Elapsed time > user time
+    system.time(readLines("http://www.jhsph.edu"))
+        user    system  elapsed
+        0.004   0.002    0.431
+
+
+    ## Elapsed time < user time
+    hilbert <- function(n) {
+            i <- 1:n
+            1 / outer(i - 1, i, "+”)
+    }
+    x <- hilbert(1000)
+    system.time(svd(x))
+        user   system   elapsed
+        1.605  0.094    0.742
+
+
+Tiempo en expresiones largas
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. code-block:: r
+
+    system.time({
+        n <- 1000
+        r <- numeric(n)
+        for (i in 1:n) {
+            x <- rnorm(n)
+            r[i] <- mean(x)
+        }
+    })
+
+    ##    user  system  elapsed
+    ##   0.097   0.002    0.099
+
+
+Más allá del ``system.time()``
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+- Utilizar ``system.time()`` permite provar ciertas funciones o bloques de código para ver si toman excesivo tiempo en
+  su ejecución.
+
+- Si se conoce dónde está el problema, puede hacerse la llamada a la función ``system.time()`` en ese punto.
+
+- Pero ¿Qué pasa si no se sabe por dónde comenzar?
+
+
+El refinador de R
+^^^^^^^^^^^^^^^^^^^
+
+- La función ``Rprof()`` inicia el refinador de R
+
+    - R debe compilarse con el soporte para refinador
+
+- La función ``summaryRprof()`` sumariza la salida de ``Rprof()``
+
+- NO utilice ``system.time()`` y ``Rprof()`` juntas o se entristecerá
+
+- ``Rprof()`` hace seguimiento de la función a intervalos de muestreo regulares, y tabula cuánto tiempo se utiliza en
+  cada función.
+
+- El intervalo de muestreo por defecto es 0.02 segs.
+
+- NOTA: si el código se ejecuta con rapidez, el refinador no es útil, de hecho, puede que no sea necesario usarlo.
+
+
+Salida en bruto del refinador de R
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. code-block:: r
+
+    ## lm(y ~ x)
+
+
+    sample.interval=10000
+    "list" "eval" "eval" "model.frame.default" "model.frame" "eval" "eval" "lm"
+    "list" "eval" "eval" "model.frame.default" "model.frame" "eval" "eval" "lm"
+    "list" "eval" "eval" "model.frame.default" "model.frame" "eval" "eval" "lm"
+    "list" "eval" "eval" "model.frame.default" "model.frame" "eval" "eval" "lm"
+    "na.omit" "model.frame.default" "model.frame" "eval" "eval" "lm"
+    "na.omit" "model.frame.default" "model.frame" "eval" "eval" "lm"
+    "na.omit" "model.frame.default" "model.frame" "eval" "eval" "lm"
+    "na.omit" "model.frame.default" "model.frame" "eval" "eval" "lm"
+    "na.omit" "model.frame.default" "model.frame" "eval" "eval" "lm"
+    "na.omit" "model.frame.default" "model.frame" "eval" "eval" "lm"
+    "na.omit" "model.frame.default" "model.frame" "eval" "eval" "lm"
+    "lm.fit" "lm"
+    "lm.fit" "lm"
+    "lm.fit" "lm"
+
+
+Utilizando ``summaryRprof()``
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+- La función ``summaryRprof()`` tabula la salida del refinador de R y calcula cuánto tiempo demora cada una de las
+  funciones
+
+- Hay dos métodos para normalizar los datos
+
+- ``by.total`` divide el tiempo utilizado en cada función entre el total del tiempo de ejecución.
+
+- ``by.self`` hacelo mismo pero primero sustrae el tiempo que es utilizado en funciones antes de la lista de llamados.
+
+
+``By Total``
+^^^^^^^^^^^^^
+
+
+.. code-block:: r
+
+    $by.total
+
+                            total.time total.pct  self.time  self.pct
+    "lm"                          7.41    100.00       0.30      4.05
+    "lm.fit"                      3.50     47.23       2.99     40.35
+    "model.frame.default"         2.24     30.23       0.12      1.62
+    "eval"                        2.24     30.23       0.00      0.00
+    "model.frame"                 2.24     30.23       0.00      0.00
+    "na.omit"                     1.54     20.78       0.24      3.24
+    "na.omit.data.frame"          1.30     17.54       0.49      6.61
+    "lapply"                      1.04     14.04       0.00      0.00
+    "[.data.frame"                1.03     13.90       0.79     10.66
+    "["                           1.03     13.90       0.00      0.00
+    "as.list.data.frame"          0.82     11.07       0.82     11.07
+    "as.list"                     0.82     11.07       0.00      0.00
+
+
+``by self``
+^^^^^^^^^^^^
+
+.. code-block:: r
+
+    $by.self
+
+                           self.time self.pct total.time total.pct
+    "lm.fit"                    2.99    40.35       3.50     47.23
+    "as.list.data.frame"        0.82    11.07       0.82     11.07
+    "[.data.frame"              0.79    10.66       1.03     13.90
+    "structure"                 0.73     9.85       0.73      9.85
+    "na.omit.data.frame"        0.49     6.61       1.30     17.54
+    "list"                      0.46     6.21       0.46      6.21
+    "lm"                        0.30     4.05       7.41    100.00
+    "model.matrix.default"      0.27     3.64       0.79     10.66
+    "na.omit"                   0.24     3.24       1.54     20.78
+    "as.character"              0.18     2.43       0.18      2.43
+    "model.frame.default"       0.12     1.62       2.24     30.23
+    "anyDuplicated.default"     0.02     0.27       0.02      0.27
+
+
+Salida de ``summaryRprof()``
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. code-block:: r
+
+    $sample.interval
+    [1] 0.02
+
+    $sampling.time
+    [1] 7.41
+
+Resumen
+^^^^^^^^
+
+- ``Rprof()`` ejecuta el refinador de desempeño de analisis del código R
+
+- ``summaryRprof()`` sumariza la salida de ``Rprof()`` y asigna un porcentaje al tiempo utilizado en cada función (con
+  dos tipos de normalización)
+
+- Es sano cortar el código en funciones de modo que el refinador pueda aportar información útil sobre donde se está
+  usando el tiempo.
+
+- Los códigos C y Fortran no se refinan
+
+
+
+
+
+
 
 
