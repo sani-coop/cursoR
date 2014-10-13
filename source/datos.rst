@@ -541,4 +541,85 @@ función ``object.size()``.
 Conectar con bases de datos
 ===========================
 
+MySQL
+-----
 
+* `MySQL`_ Sistema de base de datos libre ampliamente usada.
+* Ampliamente utilizado por aplicaciones de Internet
+* Los dato están estructurados en:
+  * Bases de datos
+  * Tablas dentro de bases de datos
+  * Campos dentro de tablas
+* Cada fila es un registro
+
+Desde la adquisición de SUN por Oracle, existe una versión comunitaria de
+MySQL denominada MariaDB.
+
+.. _mySQL: http://en.wikipedia.org/wiki/MySQL
+
+Instalación de RMySQL
+---------------------
+
+* En Linux o Mac: ```install.packages("RMySQL")```
+* En Windows:
+  * Instrucciones oficiales - http://biostat.mc.vanderbilt.edu/wiki/Main/RMySQL
+    (tambien puede ser útil para los usuarios Mac/Linux)
+  * Guía potencialmente útil - http://www.ahschulz.de/2013/07/23/installing-rmysql-under-windows/
+
+
+Conexión a bases de datos. Obtener una lista de las bases de datos disponibles.
+
+.. code-block:: r
+
+    ucscDb <- dbConnect(MySQL(),user="genome",
+                        host="genome-mysql.cse.ucsc.edu")
+    result <- dbGetQuery(ucscDb,"show databases;"); dbDisconnect(ucscDb);
+    result
+
+Conexión a la base de datos "hg19" y obtener una lista de sus tablas.
+
+.. code-block:: r
+
+    hg19 <- dbConnect(MySQL(),user="genome", db="hg19",
+                        host="genome-mysql.cse.ucsc.edu")
+    allTables <- dbListTables(hg19)
+    length(allTables)
+    allTables[1:5]
+
+Para obtener las dimensiones de una tabla en particular
+
+.. code-block:: r
+
+    dbListFields(hg19,"affyU133Plus2")
+    dbGetQuery(hg19, "select count(*) from affyU133Plus2")
+
+Finalmente, obtener datos de la base de datos.
+
+.. code-block:: r
+
+    affyData <- dbReadTable(hg19, "affyU133Plus2")
+    head(affyData)
+
+Si se quiere obtener un subconjunto de la tabla.
+
+.. code-block:: r
+
+    query <- dbSendQuery(hg19, "select * from affyU133Plus2 where misMatches between 1 and 3")
+    affyMis <- fetch(query); quantile(affyMis$misMatches)
+    affyMisSmall <- fetch(query,n=10); dbClearResult(query);
+    dim(affyMisSmall)
+
+No hay que olvidar cerrar la conexión.
+
+.. code-block:: r
+
+    dbDisconnect(hg19)
+
+Recursos adicionales:
+
+* RMySQL vignette http://cran.r-project.org/web/packages/RMySQL/RMySQL.pdf
+* Lista de comandos http://www.pantz.org/software/mysql/mysqlcommands.html
+  * En ningún caso borrar, añadir, o enlazar tablas desde ensembl. Solamente
+  select.
+  * En general, ser cuidados con los comandos de MySQL
+* Un post con un buen resúmen de comandos http://www.r-bloggers.com/mysql-and-r/
