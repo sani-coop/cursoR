@@ -832,11 +832,3 @@ Resumen
   usando el tiempo.
 
 - Los códigos C y Fortran no se refinan
-
-
-
-
-
-
-
-
