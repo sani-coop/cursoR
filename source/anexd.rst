@@ -250,10 +250,41 @@ Resumen
 
 
 lattice
-^^^^^^^
+^^^^^^^^
+
+
 
 ggplot2
-^^^^^^^
+^^^^^^^^
+
+¿Qué es ``ggplot2``?
+
+- Es una implementación de *Grammar of Graphics* de Leland Wilkinson
+
+- Fue escrita por Hadley Wickham (mientras era estudiante en la Universidad de Iowa)
+
+- Es un sistema gráfico de "terceros" para R (junto a ``base`` y ``lattice``)
+
+- Está disponible desde CRAN a través de ``install.packages()`` (http://ggplot2.org)
+
+- *Grammar of graphics* representa una abstracción de ideas/objetos
+
+- Es pensar los gráficos en términos de "verbo", "sustantivo", "adjetivo"
+
+- Posibilita una "teoría" de gráficos sobre la cual construir nuevos gráficos y objetos gráficos
+
+Elementos Básicos
+******************
+
+``qplot()``
+^^^^^^^^^^^^
+
+- Trabaja muy parecido a la función ``plot`` en sistemas gráficos base
+
+- Busca datos en un conjunto de datos, tal como ``lattice``, o el entorno inmediato
+
+- Los gráficos se hacen con *estética* (tamaño, color, forma)
+
 
 Creación de gráficos análiticos
 -------------------------------
