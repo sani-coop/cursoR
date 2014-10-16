@@ -621,7 +621,9 @@ Recursos adicionales:
 
 * RMySQL vignette http://cran.r-project.org/web/packages/RMySQL/RMySQL.pdf
 * Lista de comandos http://www.pantz.org/software/mysql/mysqlcommands.html
+
   * En ningún caso borrar, añadir, o enlazar tablas desde ensembl. Solamente
-  select.
+    select.
   * En general, tener cuidados con los comandos de MySQL
+
 * Un post con un buen resúmen de comandos http://www.r-bloggers.com/mysql-and-r/
