@@ -7,17 +7,17 @@ Datos crudos y datos ordenados
 
 Se sabe que se está trabajando con *datos crudos* porque:
 
-# No se ha ejecutado software sobre los datos
-# No se ha manipulado ningún valor de los datos
-# No se ha quitado ningún valor de los datos
-# No se han resumido ni agregado los datos de ninguna manera.
+* No se ha ejecutado software sobre los datos
+* No se ha manipulado ningún valor de los datos
+* No se ha quitado ningún valor de los datos
+* No se han resumido ni agregado los datos de ninguna manera.
 
 El objetivo es obtener *datos ordenados*, los cuales se caracterizan por:
 
-# Cada variable medida debe estar en una columna diferente.
-# Cada observación diferente de esa variable debe estar en una fila diferente
-# Debe haber una tabla para cada "tipo" de variable.
-# Si tiene varias tablas, debe tener una columna en la tabla que permita
+* Cada variable medida debe estar en una columna diferente.
+* Cada observación diferente de esa variable debe estar en una fila diferente
+* Debe haber una tabla para cada "tipo" de variable.
+* Si tiene varias tablas, debe tener una columna en la tabla que permita
   enlazarlas.
 
 Observar las siguientes sugerencias:
@@ -25,15 +25,15 @@ Observar las siguientes sugerencias:
 * Es conveniente añadir una fila en la parte superior de cada archivo
   (cabecera) con los nombres de las variables.
 * Los nombres de las variables deben ser legibles. Por ejemplo,
-es preferible "EdadIngreso" en lugar de "EdadI".
+  es preferible "EdadIngreso" en lugar de "EdadI".
 * En general, se debe guardar una tabla por archivo.
 
 Se debe contar con o construir un *libro de códigos*. Esto es, una descripción
 del proceso de conversión de datos crudos a ordenados que contenga:
 
-# Información acerca de las variables y sus unidades.
-# Información sobre las decisiones de resumen o agregación de las variables
-# Información sobre el diseño experimental utilizado.
+* Información acerca de las variables y sus unidades.
+* Información sobre las decisiones de resumen o agregación de las variables
+* Información sobre el diseño experimental utilizado.
 
 Algunas recomendaciones:
 
@@ -175,12 +175,12 @@ Con frecuencia se requiere leer los datos de filas y columnas especificas.
     nacimientosFiltro
 
 * La función ``write.xlsx()`` puede utilizarse para generar archivos de Excel
- con argumentos similares.
+  con argumentos similares.
 * La función ``read.xlsx2()`` es mucho mas rápida que ``read.xlsx()`` pero
-puede ser inestable para leer de subconjuntos de filas.
+  puede ser inestable para leer de subconjuntos de filas.
 * El paquete `XLConnect`_ tiene mas opciones para escribir y manipular
-archivos de Excel. La `viñeta de XLConnect`_ es un buen lugar para empezar
-con ese paquete.
+  archivos de Excel. La `viñeta de XLConnect`_ es un buen lugar para empezar
+  con ese paquete.
 
 .. important::
 
@@ -324,7 +324,7 @@ formato JSON.
     json2[1,1:4]
 
 * Las solicitudes de ``httr``,  ``GET()``, ``POST()``, ``PUT()``,
-`DELETE()` ofrecen opciones para conexiones con autenticación.
+  `DELETE()` ofrecen opciones para conexiones con autenticación.
 * La mayoría de los APIs actuales utilizan mecanismos estándares de
   autenticación como OAUTH.
 * ``httr`` funciona bien con Facebook, Google, Twitter, Github, etc.
@@ -444,6 +444,7 @@ Un pequeño vistazo a los datos descargados:
 Se obtiene un resumen descriptivo:
 
 .. code-block:: r
+
     summary(restData)
 
 Información en mayor profundidad:
@@ -562,6 +563,7 @@ Instalación de RMySQL
 
 * En Linux o Mac: ```install.packages("RMySQL")```
 * En Windows:
+
   * Instrucciones oficiales - http://biostat.mc.vanderbilt.edu/wiki/Main/RMySQL
     (tambien puede ser útil para los usuarios Mac/Linux)
   * Guía potencialmente útil - http://www.ahschulz.de/2013/07/23/installing-rmysql-under-windows/
@@ -621,5 +623,5 @@ Recursos adicionales:
 * Lista de comandos http://www.pantz.org/software/mysql/mysqlcommands.html
   * En ningún caso borrar, añadir, o enlazar tablas desde ensembl. Solamente
   select.
-  * En general, ser cuidados con los comandos de MySQL
+  * En general, tener cuidados con los comandos de MySQL
 * Un post con un buen resúmen de comandos http://www.r-bloggers.com/mysql-and-r/
