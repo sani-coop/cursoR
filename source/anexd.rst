@@ -252,12 +252,36 @@ Resumen
 lattice
 ^^^^^^^^
 
+Utilizando ``lattice``:
+
+- Los gráficos se crean con un simple llamado a la función (``xyplot``, ``bwplot``, etc.)
+
+- Son muy útiles para tipos de gráficos condicionados: observaciones de cómo :marth:`y` cambia con :math:`x` a través de
+  niveles de :math:`z`
+
+- Elementos como márgenes/espaciado se establecen automáticamente ya que todo el gráfico se especifica al principio.
+
+- Es muy útil para colocar muchos, muchos gráficos juntos en una pantalla
+
+- Muchas veces resulta poco útil para especificar un gráfico completo en una única llamada de función
+
+- Los comentarios y anotaciones en el gráfico no son intuitivos
+
+- El uso de las funciones del panel y los subscripts se dificulta y requiere una preparación intensa.
+
+- No se puede añadir al gráfico una vez que se ha creado.
 
 
 ggplot2
 ^^^^^^^^
 
-¿Qué es ``ggplot2``?
+- Divide la diferencia entre ``base`` y ``lattice``
+
+- Trabaja de modo automático con espaciado, texto, títulos, y también permite hacer anotaciones a través de ``adding``
+
+- Tiene una similaridad superficial con el ``lattice`` pero en general es mucho más intuitivo y sencillo de utlizar.
+
+- El modo por defecto tiene muchas opciones disponibles (¡que pueden configurarse!)
 
 - Es una implementación de *Grammar of Graphics* de Leland Wilkinson
 
@@ -283,7 +307,9 @@ Elementos Básicos
 
 - Busca datos en un conjunto de datos, tal como ``lattice``, o el entorno inmediato
 
-- Los gráficos se hacen con *estética* (tamaño, color, forma)
+- Los gráficos se hacen con *estética* (tamaño, color, forma) y *geometría* (puntos, líneas)
+
+
 
 
 Creación de gráficos análiticos
