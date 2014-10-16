@@ -1,12 +1,11 @@
 Análisis Exploratorio de Datos
 ==============================
 
-FALTA UNA PEQUEÑA INTRODUCCION AQUI
-
 Representaciones visuales de los datos
 ----------------------------------------
 
-El análisis exploratorio de datos a través de gráficos cumple con los siguientes principios:
+El análisis exploratorio de datos a través de gráficos cumple con los
+siguientes principios:
 
 - Principio 1: muestra comparaciones
 
@@ -34,7 +33,8 @@ El análisis exploratorio de datos a través de gráficos cumple con los siguien
 - Para comunicar resultados.
 
 
-Sin embargo, los **gráficos exploratorios** se usan sólo para **comunicar resultados**.
+Sin embargo, los **gráficos exploratorios** se usan sólo para **comunicar
+resultados**.
 
 
 Características de los gráfcos exploratorios
@@ -55,20 +55,23 @@ Ejemplo:
 La contaminación ambiental en Estados Unidos
 **********************************************
 
-- La Agencia de Protección Medioambiental de Estados Unidos (EPA por sus siglas en inglés) establece estándares nacionales
-  ambientales de la calidad del aire para la contaminación del aire exterior
+- La Agencia de Protección Medioambiental de Estados Unidos (EPA por sus siglas
+  en inglés) establece estándares nacionales ambientales de la calidad del aire
+  para la contaminación del aire exterior
 
     - `Estándares Nacionales Ambientales de Calidad del Aire <http://www.epa.gov/air/criteria.html>`_
 
-- Para contaminción de partícula fina (PM2.5), la "media anual, premediada durante 3 años" no puede exceder :math:`12\mu g/m^3`
+- Para contaminción de partícula fina (PM2.5), la "media anual, premediada
+  durante 3 años" no puede exceder :math:`12\mu g/m^3`
 
 - Los datos de PM2.5 diarios están disponibles desde la página web del EPA
 
-    - `Sistema de Calidad del Aire de EPA <http://www.epa.gov/ttn/airs/airsaqs/detaildata/downloadaqsdata.htm>`_
+    - `Sistema de Calidad del Aire de EPA`_
 
+.. _Sistema de Calidad del Aire de EPA: http://www.epa.gov/ttn/airs/airsaqs/detaildata/downloadaqsdata.htm
 
-
-- **Pregunta**: ¿Hay lugares en Estados Unidos que superen ese estandar nacional de contaminación de partícula fina?
+- **Pregunta**: ¿Hay lugares en Estados Unidos que superen ese estandar nacional
+  de contaminación de partícula fina?
 
 
 Datos
@@ -78,9 +81,10 @@ Promedio anual PM2.5 acumulado desde el 2008 al 2010
 
 .. code-block:: r
 
-    pollution <- read.csv("data/avgpm25.csv", colClasses = c("numeric", "character",
-        "factor", "numeric", "numeric"))
-    head(pollution)
+    pollution <- read.csv("data/avgpm25.csv",
+                          colClasses = c("numeric", "character",
+                                         "factor", "numeric", "numeric"))
+                          head(pollution)
 
     ##        pm25   fips   region   longitude   latitude
     ##  1    9.771  01003     east      -87.75      30.59
@@ -168,7 +172,8 @@ Gráfico de barras
 
 .. code-block:: r
 
-    barplot(table(pollution$region), col = "wheat", main = "Number of Counties in Each Region")
+    barplot(table(pollution$region), col = "wheat",
+            main = "Number of Counties in Each Region")
 
 
 Resumenes simples de datos con dos dimensiones
@@ -242,7 +247,8 @@ Resumen
 
 - Los gráficos exploratorios son "rápidos y sucios"
 
-- Permiten resumir los datos (a menudo de forma gráfica) y destacar cualquier característica común
+- Permiten resumir los datos (a menudo de forma gráfica) y destacar cualquier
+  característica común
 
 - Explora preguntas básicas e hipótesis (y quizás las descarte)
 
@@ -254,20 +260,24 @@ lattice
 
 Utilizando ``lattice``:
 
-- Los gráficos se crean con un simple llamado a la función (``xyplot``, ``bwplot``, etc.)
+- Los gráficos se crean con un simple llamado a la función (``xyplot``,
+  ``bwplot``, etc.)
 
-- Son muy útiles para tipos de gráficos condicionados: observaciones de cómo :marth:`y` cambia con :math:`x` a través de
-  niveles de :math:`z`
+- Son muy útiles para tipos de gráficos condicionados: observar como :math:`y`
+  cambia con :math:`x` a través de niveles de :math:`z`
 
-- Elementos como márgenes/espaciado se establecen automáticamente ya que todo el gráfico se especifica al principio.
+- Elementos como márgenes/espaciado se establecen automáticamente ya que todo
+  el gráfico se especifica al principio.
 
 - Es muy útil para colocar muchos, muchos gráficos juntos en una pantalla
 
-- Muchas veces resulta poco útil para especificar un gráfico completo en una única llamada de función
+- Muchas veces resulta poco útil para especificar un gráfico completo en una
+  única llamada de función
 
 - Los comentarios y anotaciones en el gráfico no son intuitivos
 
-- El uso de las funciones del panel y los subscripts se dificulta y requiere una preparación intensa.
+- El uso de las funciones del panel y los subscripts se dificulta y requiere
+  una preparación intensa.
 
 - No se puede añadir al gráfico una vez que se ha creado.
 
@@ -277,15 +287,19 @@ ggplot2
 
 - Divide la diferencia entre ``base`` y ``lattice``
 
-- Trabaja de modo automático con espaciado, texto, títulos, y también permite hacer anotaciones a través de ``adding``
+- Trabaja de modo automático con espaciado, texto, títulos, y también permite
+  hacer anotaciones a través de ``adding``
 
-- Tiene una similaridad superficial con el ``lattice`` pero en general es mucho más intuitivo y sencillo de utlizar.
+- Tiene una similaridad superficial con el ``lattice`` pero en general es mucho
+  más intuitivo y sencillo de utlizar.
 
-- El modo por defecto tiene muchas opciones disponibles (¡que pueden configurarse!)
+- El modo por defecto tiene muchas opciones disponibles (¡que pueden
+  configurarse!)
 
 - Es una implementación de *Grammar of Graphics* de Leland Wilkinson
 
-- Fue escrita por Hadley Wickham (mientras era estudiante en la Universidad de Iowa)
+- Fue escrita por Hadley Wickham (mientras era estudiante en la Universidad de
+  Iowa)
 
 - Está disponible desde CRAN a través de ``install.packages()`` (http://ggplot2.org)
 
@@ -300,16 +314,20 @@ Elementos Básicos
 
 - Trabaja muy parecido a la función ``plot`` en sistemas gráficos base
 
-- Busca datos en un conjunto de datos, tal como ``lattice``, o el entorno inmediato
+- Busca datos en un conjunto de datos, tal como ``lattice``, o el entorno
+  inmediato
 
-- Los gráficos se hacen con *estética* (tamaño, color, forma) y *geometría* (puntos, líneas)
+- Los gráficos se hacen con *estética* (tamaño, color, forma) y *geometría*
+  (puntos, líneas)
 
-- Aquellos elementos que son importates para indicar subconjuntos de datos deben se **etiquetados** (si tienen
-  propiedades distintas)
+- Aquellos elementos que son importates para indicar subconjuntos de datos
+  deben ser **etiquetados** (si tienen propiedades distintas)
 
-- ``qplot()`` oculta lo que ocurre en el interior, lo cual está bien para la mayoría de las operaciones
+- ``qplot()`` oculta lo que ocurre en el interior, lo cual está bien para la
+  mayoría de las operaciones
 
-- ``ggplot()`` es la función central y es mucho más flexible para hacer cosas que no se pueden hacer con ``qplot()``
+- ``ggplot()`` es la función central y es mucho más flexible para hacer cosas
+  que no se pueden hacer con ``qplot()``
 
 
 Ejemplo
@@ -334,8 +352,8 @@ Ejemplo
      $ class       : Factor w/ 7 levels "2seater","compact",..: 2 2 2 2 2 2 2 2 2 2 ...
 
 
-``ggplot2 "Hello, world!"
-^^^^^^^^^^^^^^^^^^^^^^^^^^
+``ggplot2`` "Hello, world!"
+^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 .. code-block:: r
 
@@ -374,7 +392,7 @@ Facetas
 
 
 
-Creación de gráficos análiticos
+Creación de gráficos analíticos
 -------------------------------
 
 
