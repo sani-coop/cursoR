@@ -172,7 +172,7 @@ Gráfico de barras
 
 
 Resumenes simples de datos con dos dimensiones
-************************************************
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 - Puntos 1-D múltiples/superpuestos (``Latice`` y ``ggplot2``)
 
@@ -218,7 +218,9 @@ Diagrama de dispersión
     with(pollution, plot(latitude, pm25))
     abline(h = 12, lwd = 2, lty = 2)
 
+
 Usando color
+^^^^^^^^^^^^^
 
 .. code-block:: r
 
@@ -249,8 +251,8 @@ Resumen
 - Sugiere estrategias de modelado para los siguientes pasos
 
 
-lattice
-^^^^^^^^
+``lattice``
+^^^^^^^^^^^^
 
 Utilizando ``lattice``:
 
@@ -272,8 +274,8 @@ Utilizando ``lattice``:
 - No se puede añadir al gráfico una vez que se ha creado.
 
 
-ggplot2
-^^^^^^^^
+``ggplot2``
+^^^^^^^^^^^^
 
 - Divide la diferencia entre ``base`` y ``lattice``
 
@@ -334,7 +336,7 @@ Ejemplo
      $ class       : Factor w/ 7 levels "2seater","compact",..: 2 2 2 2 2 2 2 2 2 2 ...
 
 
-``ggplot2 "Hello, world!"
+``ggplot2`` "Hello, world!"
 ^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 .. code-block:: r
