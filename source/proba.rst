@@ -5,7 +5,7 @@ Conceptos de probabilidades basados en R
 ----------------------------------------
 
 Definición de probabilidad
---------------------------
+^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 Considerando un enfoque de probabilidad como proporción de ocurrencia de
 eventos, entonces es necesario definir un conjunto de eventos posibles.
@@ -54,10 +54,10 @@ Una **variable aleatoria** es el resultado numérico de un experimento.
 
 Puede ser:
 
-- Discreta: cuando solamente puede tomar valores de un conjunto enumerable.
+* *Discreta*: cuando solamente puede tomar valores de un conjunto enumerable.
   math:`P(X = k)`
 
-- Continua: cuando puede tomar cualquier valor de la recta real o un
+* *Continua*: cuando puede tomar cualquier valor de la recta real o un
   subconjunto sobre esta. math:`P(X \in A)`
 
 Función de masa de probabilidad
@@ -97,7 +97,7 @@ por una línea de ayuda está dada por:
 
 ¿Es una densidad matemáticamente valida?
 
-..math::
+.. math::
 
     x <- c(-0.5, 0, 1, 1, 1.5); y <- c( 0, 0, 2, 0, 0)
     plot(x, y, lwd = 3, frame = FALSE, type = "l")
@@ -118,7 +118,7 @@ La **función de distribucion acumulada** (FDA) de una variable aleatoria
 
     F(x) = P(X \leq x)
 
-- Esta definición aplica sin importar que :math:`X` sea discreta o continua.
+* Esta definición aplica sin importar que :math:`X` sea discreta o continua.
 
 La **función de supervivencia** de una variable aleatoria :math:`X` está
 definida como:
@@ -126,8 +126,8 @@ definida como:
 ..math::
     S(x) = P(X > x)
 
-- Note que :math:`S(x) = 1 - F(x)`
-- Para variables aleatorias continuas, la FDP es la derivada de la FDA.
+* Note que :math:`S(x) = 1 - F(x)`
+* Para variables aleatorias continuas, la FDP es la derivada de la FDA.
 
 Ejemplo,
 
@@ -146,29 +146,29 @@ para :math:`1 \geq x \geq 0`
 
     pbeta(c(0.4, 0.5, 0.6), 2, 1)
 
-- El **cuantil** :math:`alpha^{ésimo}` de una distribución con función de
+El **cuantil** :math:`alpha^{ésimo}` de una distribución con función de
 distribución :math:`F` es el punto :math:`x_\alpha` tal que:
 
 .. math::
 
     F(x_\alpha) = \alpha
 
-- Un **percentil** es simplemente un cuantil con :math:`\alpha` expresado
-como un porcentaje.
-- La **mediana** es el $50^{avo}$ percentile
+* Un **percentil** es simplemente un cuantil con :math:`\alpha` expresado
+  como un porcentaje.
+* La **mediana** es el $50^{avo}$ percentile
 .
 Ejemplo
 
-- Se quiere resolver :math:`0.5 = F(x) = x^2`
-- Resulta en la solución:
+* Se quiere resolver :math:`0.5 = F(x) = x^2`
+* Resulta en la solución:
 
 .. code-block:: r
 
     sqrt(0.5)
 
-- En consecuencia, alrededor de `r sqrt(0.5)` de las llamadas que se
-responden un día cualquiera es la mediana.
-- R puede aproximar cuantiles para las distribuciones mas comunes.
+* En consecuencia, alrededor de `r sqrt(0.5)` de las llamadas que se
+  responden un día cualquiera es la mediana.
+* R puede aproximar cuantiles para las distribuciones mas comunes.
 
 .. code-block:: r
 
@@ -177,12 +177,12 @@ responden un día cualquiera es la mediana.
 
 Notas
 
-- Cuando se refiere **medidas de la población** se trata de la mediana de
+* Cuando se refiere **medidas de la población** se trata de la mediana de
   los datos. La **mediana de la población** es la que se obtiene integrando
   la función de densidad.
-- Un modelo de probabilidad conecta los datos a la población en base a
+* Un modelo de probabilidad conecta los datos a la población en base a
   supuestos.
-- La mediana de la que se habla es el **estimando**, la mediana de la muestra
+* La mediana de la que se habla es el **estimando**, la mediana de la muestra
   será el **estimador**
 
 Valores esperados
@@ -230,9 +230,9 @@ El centro de masa es la media empírica
 
 .. code-block:: r
 
-   hist(galton$child,col="blue",breaks=100)
+   hist(galton$child, col="blue", breaks=100)
    meanChild <- mean(galton$child)
-   lines(rep(meanChild,100),seq(0,150,length=100),col="red",lwd=5)
+   lines(rep(meanChild,100), seq(0,150,length=100), col="red", lwd=5)
 
 Ejemplo, suponga que se lanza una moneda y :math:`X` se denota :math:`0` o
 :math:`1 que corresponden a cara y sello, respectivamente.
@@ -248,13 +248,15 @@ colocan dos pesos iguales en 0 y 1, el centro de masa será :math:`0.5`.
 
 .. code-block:: r
 
-    barplot(height = c(.5, .5), names = c(0, 1), border = "black", col = "lightblue", space = .75)
+    barplot(height = c(.5, .5), names = c(0, 1),
+            border = "black",
+            col = "lightblue",
+            space = .75)
 
 Ejemplo, suponga que se lanza un dado y :math:`X` es el número que queda boca
 arriba.
 
 ¿Cuál es el valor esperado de :math:`X`?
-
 
 .. math::
 
@@ -288,8 +290,12 @@ Suponga que :math:`X` sigue esta densidad; ¿Cuál es el valor esperado?
 .. code-block:: r
 
     par(mfrow = c(1, 2))
-    plot(c(-0.25, 0, 0, 1, 1, 1.25), c(0, 0, 1, 1, 0, 0), type = "l", lwd = 3, frame = FALSE, xlab="", ylab = ""); title('f(t)')
-    plot(c(-0.25, 0, 1, 1, 1.25), c(0, 0, 1, 0, 0), type = "l", lwd = 3, frame = FALSE, xlab="", ylab = ""); title('t f(t)')
+    plot(c(-0.25, 0, 0, 1, 1, 1.25), c(0, 0, 1, 1, 0, 0),
+         type = "l", lwd = 3, frame = FALSE, xlab="", ylab = "")
+    title('f(t)')
+    plot(c(-0.25, 0, 1, 1, 1.25), c(0, 0, 1, 0, 0),
+         type = "l", lwd = 3, frame = FALSE, xlab="", ylab = "")
+    title('t f(t)')
 
 Reglas sobre los valores esperados
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -298,8 +304,9 @@ El valor esperado es una operador lineal.
 
 Si :math:`a` y :math:`b` no son aleatorias y :math:`X` y :math:`Y` son dos
 variables aleatorias entonces:
-  - :math:`E[aX + b] = a E[X] + b`
-  - :math:`E[X + Y] = E[X] + E[Y]`
+
+* :math:`E[aX + b] = a E[X] + b`
+* :math:`E[X + Y] = E[X] + E[Y]`
 
 Ejemplo, si lanza una moneda :math:`X` y simula una variable aleatoria
 uniforme :math:`Y`, ¿Cuál es el valor esperado de su suma?
@@ -333,94 +340,92 @@ aleatorias, cada una de una distribución con media :math:`\mu`.
     & = & \frac{1}{n} \sum_{i=1}^n \mu =  \mu.
   \end{eqnarray*}
 
+.. important::
 
----
+   * En consecuencia, el valor esperado de la **media muestral** es la media
+     de la población que se está intentando estimar.
+   * Cuando el valor esperado de un estimador es lo que trata de estimar,
+     se dice que el estimador es **no sesgado**.
 
-## Remark
+La varianza
+^^^^^^^^^^^
 
-- Therefore, the expected value of the **sample mean** is the population mean that it's trying to estimate
-- When the expected value of an estimator is what its trying to estimate, we say that the estimator is **unbiased**
+* La varianza de una variable aleatoria es una medida de *dispersión*
+* Si :math:`X` es una variable aleatoria con media :math:`\mu`,
+  la varianza de :math:`X` está definida como:
 
----
+.. math::
 
-## The variance
+   Var(X) = E[(X - \mu)^2]
 
-- The variance of a random variable is a measure of *spread*
-- If $X$ is a random variable with mean $\mu$, the variance of $X$ is defined as
+La distancia esperada (al cuadrado) alrededor de la media.
 
-$$
-Var(X) = E[(X - \mu)^2]
-$$
+* La densidades con una mayor varianza están mas dispersas que las densidades
+  con una menor varianza.
 
-the expected (squared) distance from the mean
-- Densities with a higher variance are more spread out than densities with a lower variance
 
----
+Forma computacional conveniente
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-- Convenient computational form
-$$
-Var(X) = E[X^2] - E[X]^2
-$$
-- If $a$ is constant then $Var(aX) = a^2 Var(X)$
-- The square root of the variance is called the **standard deviation**
-- The standard deviation has the same units as $X$
+.. math::
 
----
+   Var(X) = E[X^2] - E[X]^2
 
-## Example
+* Si :math:`a` es una constante entonces :math:`Var(aX) = a^2 Var(X)`
+* La raíz cuadrada de la varianza es denominada **desviación estándar**
+* La desviación estándar tiene las mismas unidades que :math:`X`
 
-- What's the sample variance from the result of a toss of a die?
 
-  - $E[X] = 3.5$
-  - $E[X^2] = 1 ^ 2 \times \frac{1}{6} + 2 ^ 2 \times \frac{1}{6} + 3 ^ 2 \times \frac{1}{6} + 4 ^ 2 \times \frac{1}{6} + 5 ^ 2 \times \frac{1}{6} + 6 ^ 2 \times \frac{1}{6} = 15.17$
+Ejemplo, ¿Cuál es la varianza muestral del resultado de lanzar una moneda?
 
-- $Var(X) = E[X^2] - E[X]^2 \approx 2.92$
+* :math:`E[X] = 3.5`
+* :math:`E[X^2] = 1 ^ 2 \times \frac{1}{6} + 2 ^ 2 \times \frac{1}{6} + 3 ^ 2 \times \frac{1}{6} + 4 ^ 2 \times \frac{1}{6} + 5 ^ 2 \times \frac{1}{6} + 6 ^ 2 \times \frac{1}{6} = 15.17`
+* :math:`Var(X) = E[X^2] - E[X]^2 \approx 2.92`
 
----
+Ejemplo, ¿Cuál es la varianza muestral del resultado del lanzamiento de una
+moneda con con probabilidad de obtener cara igual a :math:`p`?
 
-## Example
+* :math:`E[X] = 0 \times (1 - p) + 1 \times p = p`
+* :math:`E[X^2] = E[X] = p`
+* :math:`Var(X) = E[X^2] - E[X]^2 = p - p^2 = p(1 - p)`
 
-- What's the sample variance from the result of the toss of a coin with probability of heads (1) of $p$?
+Interpretando las varianzas
 
-  - $E[X] = 0 \times (1 - p) + 1 \times p = p$
-  - $E[X^2] = E[X] = p$
+* La desigualdad de Chebyshev's es útil para interpretar las varianzas
+* Esta desigualdad establece que:
 
-- $Var(X) = E[X^2] - E[X]^2 = p - p^2 = p(1 - p)$
+.. math::
 
----
+   P(|X - \mu| \geq k\sigma) \leq \frac{1}{k^2}
 
-## Interpreting variances
+Por ejemplo, la probabilidad que una variable aleatoria caiga más allá de
+:math:`k` desviaciones estándar desde la media es menor que :math:`1/k^2`
 
-- Chebyshev's inequality is useful for interpreting variances
-- This inequality states that
-$$
-P(|X - \mu| \geq k\sigma) \leq \frac{1}{k^2}
-$$
-- For example, the probability that a random variable lies beyond $k$ standard deviations from its mean is less than $1/k^2$
-$$
-\begin{eqnarray*}
-    2\sigma & \rightarrow & 25\% \\
-    3\sigma & \rightarrow & 11\% \\
-    4\sigma & \rightarrow &  6\%
-\end{eqnarray*}
-$$
-- Note this is only a bound; the actual probability might be quite a bit smaller
+.. math::
 
----
+   \begin{eqnarray*}
+       2\sigma & \rightarrow & 25\% \\
+       3\sigma & \rightarrow & 11\% \\
+       4\sigma & \rightarrow &  6\%
+   \end{eqnarray*}
 
-## Example
+* Note que esto es solamente una cota, la probabilidad verdadera puede ser un
+  poco menor.
 
-- IQs are often said to be distributed with a mean of $100$ and a sd of $15$
-- What is the probability of a randomly drawn person having an IQ higher than $160$ or below $40$?
-- Thus we want to know the probability of a person being more than $4$ standard deviations from the mean
-- Thus Chebyshev's inequality suggests that this will be no larger than 6\%
-- IQs distributions are often cited as being bell shaped, in which case this bound is very conservative
-- The probability of a random draw from a bell curve being $4$ standard deviations from the mean is on the order of $10^{-5}$ (one thousandth of one percent)
+Ejemplo:
 
----
-
-Probabilidad condicional
-------------------------
+* Se dice que los CIs están distribuidos con una media de :math:`100` y una
+  desviación estándar de :math:`15`
+* ¿Cuál es la probabilidad que una persona seleccionada aleatoriamente tenga
+  un CI superior a :math:`160` o inferior a :math:`40`?
+* Por lo tanto se quiere conocer la probabilidad que una persona tenga mas de
+  :math:`4` desviaciones estándar desde la media.
+* La desigualdad de Chebyshev sugiere que no será superior a 6\%
+* Con frecuencia se cita que las distribuciones de los CIs tienen forma de
+  campana, en este caso este límite es muy conservador.
+* La probabilidad que obtener un valor aleatorio más allá de :math:`4`
+  desviaciones estándar desde la media está por el orden de :math:`10^{-5}`
+  (una milésima de uno por ciento)
 
 Distribución de Variables aleatorias
 ------------------------------------
